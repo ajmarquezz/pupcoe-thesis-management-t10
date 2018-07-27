@@ -2,16 +2,16 @@ const express = require('express');
 const path = require('path');
 var exphbs = require('express-handlebars');
 
-// const { Client } = require('pg');
+const { Client } = require('pg');
 
-// //instantiate client using your db config
-// const client = new Client({
-// 	database: 'dbms',
-// 	user: 'alfonso',
-// 	password: '4444',
-// 	host: 'localhost',
-// 	port: 5432
-// });
+//instantiate client using your db config
+const client = new Client({
+	database: 'dbfv26t4cvpk7f',
+	user: 'pldaynnnltnwja',
+	password: 'ea36c3291d38ba07e73ae896a34e7d38e16d80b39463bc191f6ea95c23429737',
+	host: 'ec2-23-23-242-163.compute-1.amazonaws.com',
+	port: 5432
+});
 
 const app = express();
 
