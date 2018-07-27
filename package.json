@@ -14,18 +14,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paparapatpat/dbms1819-ecommerce-t10.git"
-  },
   "keywords": [
     "module",
     "ecommerce"
   ],
   "author": "navarro marquez",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/paparapatpat/dbms1819-ecommerce-t10/issues"
-  },
-  "homepage": "https://github.com/paparapatpat/dbms1819-ecommerce-t10#readme"
+  "license": "ISC"
 }
