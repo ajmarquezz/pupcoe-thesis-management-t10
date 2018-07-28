@@ -25,10 +25,10 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paparapatpat/dbms1819-ecommerce-t10.git"
+    "url": "git+https://github.com/paparapatpat/test.git"
   },
   "bugs": {
-    "url": "https://github.com/paparapatpat/dbms1819-ecommerce-t10/issues"
+    "url": "https://github.com/paparapatpat/test/issues"
   },
-  "homepage": "https://github.com/paparapatpat/dbms1819-ecommerce-t10#readme"
+  "homepage": "https://github.com/paparapatpat/test#readme"
 }

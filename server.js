@@ -1,12 +1,8 @@
 const express = require('express');
 const path = require('path');
-
 var exphbs = require('express-handlebars');
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
-
 const nodemailer = require('nodemailer');
+
 const { Client } = require('pg');
 
 //instantiate client using your db config
@@ -18,6 +14,13 @@ const client = new Client({
   port: 5432
 });
 
+//display from database
+//delete mo to pat
+// client.query("SELECT * FROM sample", (err,res) => {
+
+//   client.end();
+// });
+
 const app = express();
 
 // tell express which folder is a static/public folder
@@ -25,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine' , 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 app.get('/', function(req, res){
@@ -50,7 +54,10 @@ app.get('/details', function(req, res){
 
 });
 
-// POST route from contact form
+
+
+
+//POST route from contact form
 app.post('/contact', function (req, res) {
   let mailOpts, smtpTrans;
   smtpTrans = nodemailer.createTransport({
@@ -77,6 +84,7 @@ app.post('/contact', function (req, res) {
     }
   });
 });
+
 
 
 app.listen(process.env.PORT || 4000, function() {
