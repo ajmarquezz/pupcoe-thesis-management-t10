@@ -27,10 +27,6 @@ app.set('view engine' , 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-
-
-
 app.get('/', function(req, res){
 
   res.render('products', {
@@ -53,10 +49,6 @@ app.get('/details', function(req, res){
   })
 
 });
-
-
-
-
 
 // POST route from contact form
 app.post('/contact', function (req, res) {
@@ -85,10 +77,6 @@ app.post('/contact', function (req, res) {
     }
   });
 });
-
-
-
-
 
 
 app.listen(process.env.PORT || 4000, function() {
