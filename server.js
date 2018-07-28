@@ -4,7 +4,6 @@ const path = require('path');
 var exphbs = require('express-handlebars');
 var nodemailer = require('nodemailer');
 
-const nodemailer = require('nodemailer');
 const { Client } = require('pg');
 
 //instantiate client using your db config
