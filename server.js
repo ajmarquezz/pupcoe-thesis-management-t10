@@ -2,8 +2,11 @@ const express = require('express');
 const path = require('path');
 
 var exphbs = require('express-handlebars');
-var nodemailer = require('nodemailer');
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+
+const nodemailer = require('nodemailer');
 const { Client } = require('pg');
 
 //instantiate client using your db config
@@ -55,7 +58,7 @@ app.get('/details', function(req, res){
 
 
 
-//POST route from contact form
+// POST route from contact form
 app.post('/contact', function (req, res) {
   let mailOpts, smtpTrans;
   smtpTrans = nodemailer.createTransport({
@@ -63,14 +66,14 @@ app.post('/contact', function (req, res) {
     port: 465,
     secure: true,
     auth: {
-      user: 'patpatnastick@gmail.com',
-      pass: 'nyannyannyancaaat'
+      user: GMAIL_USER,
+      pass: GMAIL_PASS
     }
   });
   mailOpts = {
     from: req.body.name + ' &lt;' + req.body.email + '&gt;',
-    to: 'patpatnastick@gmail.com',
-    subject: 'New message from contact form at my shop',
+    to: GMAIL_USER,
+    subject: 'New message from contact form at tylerkrys.ca',
     text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
   };
   smtpTrans.sendMail(mailOpts, function (error, response) {
