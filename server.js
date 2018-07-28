@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 var exphbs = require('express-handlebars');
+const nodemailer = require('nodemailer');
 
 const { Client } = require('pg');
 
@@ -17,39 +18,64 @@ const app = express();
 
 // tell express which folder is a static/public folder
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout: 'member'}));
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine' , 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 app.get('/', function(req, res){
 
-	res.render('member', {
-		name: 'Homework No. 2',
-		imageurl: '/img.jpg',
+	res.render('products', {
+		productName: 'Product 1',
+		imageUrl: '/img.jpg'
 	})
 });
 
-app.get('/member/1', function(req, res){
+app.get('/details', function(req, res){
 
-	res.render('member', {
-		name: 'Jose Alfonso Marquez',
-		email: 'marquez.josealfonso@gmail.com',
-		phone: '09550464578',
-		imageurl: '/marquez.jpg',
-		hobbies: ['Playing Volleyball &', 'Mobile Games']
+	res.render('details', {
+		productName: 'Product 1',
+		imageUrl: '/img.jpg',
+		description: 'Description',
+		productId: 'Product ID',
+		productType: 'Product Type',
+		brand: 'Brand',
+		price: 'Price'
+
 	})
+
 });
 
-app.get('/member/2', function(req, res){
 
-	res.render('member', {
-		name: 'Patricia Navarro',
-		email: 'patgnavarro@gmail.com',
-		phone: '09173591423',
-		imageurl: '/navarro.jpg',
-		hobbies: ['Singing &', 'Playing Musical Instruments']
-	})
 
+
+//POST route from contact form
+app.post('/contact', function (req, res) {
+  let mailOpts, smtpTrans;
+  smtpTrans = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: GMAIL_USER,
+      pass: GMAIL_PASS
+    }
+  });
+  mailOpts = {
+    from: req.body.name + ' &lt;' + req.body.email + '&gt;',
+    to: GMAIL_USER,
+    subject: 'New message from contact form at tylerkrys.ca',
+    text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
+  };
+  smtpTrans.sendMail(mailOpts, function (error, response) {
+    if (error) {
+      res.render('contact-failure');
+    }
+    else {
+      res.render('contact-success');
+    }
+  });
 });
 
 
