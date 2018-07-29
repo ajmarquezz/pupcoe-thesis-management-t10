@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand" style="color: white; padding: 5px;" href="/"><i class="fa fa-arrow-left" aria-hidden="true" style="color: white !important;"></i>  Back to Shop</a>
+</nav>
+
+
+<div class="container" style="border: 0px !important;">
+
+	<div class="container-fliud">
+		<div class="wrapper row">
+			<div class="preview col-md-6">
+				<div class="preview-pic tab-content" style="margin-top: 80px;">
+					<div class="tab-pane active" id="pic-1"><img src="{{imageUrl}}" /></div>
+				</div>
+			</div>
+			<div class="details col-md-6" style="margin-top: 80px;">
+				<h3 class="product-title" style="text-transform: uppercase;">{{productName}}</h3>
+				<hr style="border-color: black !important;">
+				<h6>{{productId}} {{productType}}</h6>
+				<br><br>
+				<p class="product-description">{{description}}</p>
+				<h3 class="price">Price: <span>{{price}}</span></h3>
+				<h5 class="sizes">Sizes:
+					<span class="size" data-toggle="tooltip" title="small">S</span>
+					<span class="size" data-toggle="tooltip" title="medium">M</span>
+					<span class="size" data-toggle="tooltip" title="large">L</span>
+					<span class="size" data-toggle="tooltip" title="xtra large">XL</span>
+				</h5>
+				<p class="vote"><strong>{{brand}}</strong></p>
+				<div class="action">
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<center><h2 style="letter-spacing: 3px;">CONTACT US</h2></center>
+	<hr style="border-color: black !important; margin: 15px 250px 15px 250px;">
+	<form action="/contact" id="contact-form" method="post" role="form">
+		<fieldset>
+			<div class="form-row">
+				<div class="col">
+					<label for="name">Name: </label>
+					<input class="form-control" id="name" name="name" type="text" placeholder="Your name" required="required">
+				</div>
+				<div class="col">
+					<label for="email">Email: </label>
+					<input class="form-control" id="email" name="email" type="text" placeholder="Your email" required="required">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="message">Message: </label>
+				<textarea class="form-control" id="message" name="message" placeholder="Enter your message here" rows="3" required="required"></textarea>
+			</div>
+			<button class="btn btn-dark col-md-12" type="submit">Submit</button>
+		</fieldset>
+	</form>
+	<br>
+	<br>
+</div>
