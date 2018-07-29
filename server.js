@@ -70,7 +70,7 @@ app.post('/contact', function (req, res) {
     }
   });
   mailOpts = {
-    from: req.body.name + ' &lt;' + req.body.email + '&gt;',
+    from: GMAIL_USER,
     to: GMAIL_USER,
     subject: 'New message from contact form at tylerkrys.ca',
     text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
