@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
+const { Client } = require('pg');
+
 var exphbs = require('express-handlebars');
-// const nodemailer = require('nodemailer');
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
+
 require('dotenv').config();
-const { Client } = require('pg');
 
 //instantiate client using your db config
 const client = new Client({
@@ -27,6 +28,7 @@ const client = new Client({
 const app = express();
 
 // tell express which folder is a static/public folder
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: 'text/html' }));
 app.set('views', path.join(__dirname, 'views'));
@@ -59,11 +61,8 @@ app.get('/details', function(req, res){
 
 });
 
-
-
-
 //POST route from contact form
-app.post('/contact', function (req, res) {
+app.post('/details/contact', function (req, res) {
 
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -77,8 +76,8 @@ app.post('/contact', function (req, res) {
     from: process.env.GMAIL_USER,
     to: process.env.GMAIL_USER,
     subject: 'New Message from Shop Client',
-    text: 'You have a submission with the following details: Name: '+req.body.name+'Email: '+req.body.email+'Message: '+req.body.message,
-    html: '<p>You have a submission with the following details:</p><ul><li>Name: '+req.body.name+'</li><li>Email: '+req.body.email+'</li><li>Message: '+req.body.message+'</li></ul>'
+    text: 'You have a submission with the following details: Name: '+req.body.name+'Email: '+req.body.email+'Phone Number: '+req.body.phone+'Product ID: '+req.body.product+'Quantity: '+req.body.quantity,
+    html: '<p>You have a submission with the following details:</p><ul><li>Name: '+req.body.name+'</li><li>Email: '+req.body.email+'</li><li>Phone Number: '+req.body.phone+'</li><li>Product ID: '+req.body.product+'</li><li>Quantity: '+req.body.quantity+'</li></ul>'
   };
 
   transporter.sendMail(mailOptions, function(error, info){
@@ -87,11 +86,10 @@ app.post('/contact', function (req, res) {
       res.redirect('/details');
     } else {
       console.log('Message Sent: '+info.response);
-      res.redirect('/details');
+      res.redirect('/');
     }
   });
 });
-
 
 
 app.listen(process.env.PORT || 4000, function() {
