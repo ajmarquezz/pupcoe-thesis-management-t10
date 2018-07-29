@@ -2,8 +2,9 @@ const express = require('express');
 const path = require('path');
 var exphbs = require('express-handlebars');
 // const nodemailer = require('nodemailer');
+var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
-
+require('dotenv').config();
 const { Client } = require('pg');
 
 //instantiate client using your db config
@@ -22,9 +23,11 @@ const client = new Client({
 //   client.end();
 // });
 
+
 const app = express();
 
 // tell express which folder is a static/public folder
+app.use(bodyParser.text({ type: 'text/html' }));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine' , 'handlebars');
@@ -61,55 +64,31 @@ app.get('/details', function(req, res){
 //POST route from contact form
 app.post('/contact', function (req, res) {
 
-var transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: GMAIL_USER,
-    pass: GMAIL_PASS
-  }
-});
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS
+    }
+  });
 
-var mailOptions = {
-  from: GMAIL_USER,
-  to: GMAIL_USER,
-  subject: 'New Message from Shop Client',
-  text: 'You have a submission with the following details: Name: '+req.body.name+'Email: '+req.body.email+'Message: '+req.body.message,
-  html: '<p>You have a submission with the following details:</p><ul><li>Name: '+req.body.name+'</li><li>Email: '+req.body.email+'</li><li>Message: '+req.body.message+'</li></ul>'
-};
+  var mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: process.env.GMAIL_USER,
+    subject: 'New Message from Shop Client',
+    text: 'You have a submission with the following details: Name: '+req.body.name+'Email: '+req.body.email+'Message: '+req.body.message,
+    html: '<p>You have a submission with the following details:</p><ul><li>Name: '+req.body.name+'</li><li>Email: '+req.body.email+'</li><li>Message: '+req.body.message+'</li></ul>'
+  };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if(error){
-    console.log(error);
-    res.redirect('/details');
-  } else {
-    console.log('Message Sent: '+info.response);
-    res.redirect('/details');
-  }
-});
-  // let mailOpts, smtpTrans;
-  // smtpTrans = nodemailer.createTransport({
-  //   host: 'smtp.gmail.com',
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     user: GMAIL_USER,
-  //     pass: GMAIL_PASS
-  //   }
-  // });
-  // mailOpts = {
-  //   from: GMAIL_USER, //req.body.name + ' &lt;' + req.body.email + '&gt;',
-  //   to: GMAIL_USER,
-  //   subject: 'New message from contact form at tylerkrys.ca',
-  //   text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
-  // };
-  // smtpTrans.sendMail(mailOpts, function (error, response) {
-  //   if (error) {
-  //     res.render('contact-failure');
-  //   }
-  //   else {
-  //     res.render('contact-success');
-  //   }
-  // });
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      console.log(error);
+      res.redirect('/details');
+    } else {
+      console.log('Message Sent: '+info.response);
+      res.redirect('/details');
+    }
+  });
 });
 
 
