@@ -27,6 +27,7 @@ const client = new Client({
 const app = express();
 
 // tell express which folder is a static/public folder
+app.use(bodyParser.json());
 app.use(bodyParser.text({ type: 'text/html' }));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
