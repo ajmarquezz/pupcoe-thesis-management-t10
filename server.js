@@ -64,7 +64,8 @@ app.get('/details/:id', (req,res)=>{
       }
     }
     res.render('details',{
-      data: list
+      data: list,
+      id:'{{id}}'    
     });
   });
 });
