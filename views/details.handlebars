@@ -9,13 +9,13 @@
 
 
 		<div class="wrapper row">
-
+{{#each data}}
 			<div class="preview col-md-6">
 				<div class="preview-pic tab-content" style="margin-top: 80px;">
 					<div class="tab-pane active" id="pic-1"><img src="{{this.img_url}}" /></div>
 				</div>
 			</div>
-{{#each data}}
+
 			<div class="details col-md-6" style="margin-top: 80px;">
 				<h3 class="product-title" style="text-transform: uppercase;">{{this.product_name}}</h3>
 				<hr style="border-color: black !important;">
