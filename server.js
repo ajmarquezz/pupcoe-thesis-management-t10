@@ -58,11 +58,11 @@ app.get('/details/:id', (req,res)=>{
   var id = req.params.id;
   client.query('SELECT * FROM Products', (req, data)=>{
     var list = [];
-    // for (var i = 0; i < data.rows.length+1; i++) {
-    //   if (i==id) {
-        list.push(data.rows[id]);
-    //   }
-    // }
+    for (var i = 0; i < data.rows.length+1; i++) {
+      if (i==id) {
+        list.push(data.rows[i]);
+      }
+    }
     res.render('details',{
       data: list  
     });
