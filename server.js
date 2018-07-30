@@ -69,7 +69,6 @@ app.get('/details/:id', (req,res)=>{
   });
 });
 
-
 app.post('/details/contact', function (req, res) {
 
   var transporter = nodemailer.createTransport({
