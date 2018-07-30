@@ -5,13 +5,15 @@
 
 <div class="container m-t-md" style="margin-top: 70px;">
 	<div class="row">
+				{{#each data}}
 		<div class="col-xs-12 col-md-4">
 			<article class="card animated fadeInLeft" style="border: 0px !important;">
-				<img class="card-img-top img-responsive" src="{{image_url}}" alt="Deer in nature" />
+				<img class="card-img-top img-responsive" src="{{this.image_url}}" alt="Darius" />
 				<div class="card-block" style="padding: 20px;">
-					<center><h4 class="card-title">{{product_name}}</h4></center>
+					<center><h4 class="card-title">{{this.product_name}}</h4></center>
 					<hr style="border-color: black !important;">
 					<center><a href="/details" class="btn btn-dark" style="letter-spacing: 2px;">KNOW MORE</a></center>
 				</div>
 			</article>
 		</div>
+				{{/each}}
