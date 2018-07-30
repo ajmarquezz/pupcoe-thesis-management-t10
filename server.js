@@ -39,10 +39,10 @@ app.get('/', function(req, res){
     .then((results) =>{
       console.log('results?', results);
       res.render('products'
-        // , {
-        // productName: 'Product 1 Sample',
-        // imageUrl: '/img.jpg'
-        //   }
+        , {
+        productName: '{{product_name}}',
+        imageUrl: '{{img_url}}'
+          }
       ,results);
  
     })
