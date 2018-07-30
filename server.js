@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.get('/:id', (req,res)=>{
+app.get('/ /:id', (req,res)=>{
 	var id = req.params.id;
 	client.query('SELECT * FROM Products', (req, data)=>{
 		var list = [];
