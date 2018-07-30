@@ -60,7 +60,7 @@ app.get('/details/:id', (req,res)=>{
     var list = [];
     for (var i = 0; i < data.rows.length+1; i++) {
       if (i==id) {
-        list.push(data.rows[i-1]);
+        list.push(data.rows[i-2]);
       }
     }
     res.render('details',{
@@ -80,7 +80,7 @@ app.post('/details/:id/contact', function (req, res) {
   });
 
   var mailOptions = {
-    from: process.env.GMAIL_USER,
+    from: '"Shop" <process.env.GMAIL_USER>',
     to: process.env.GMAIL_USER,
     subject: 'New Message from Shop Client',
     text: 'You have a submission with the following details: Name: '+req.body.name+'Email: '+req.body.email+'Phone Number: '+req.body.phone+'Product ID: '+req.body.product+'Quantity: '+req.body.quantity,
@@ -90,7 +90,7 @@ app.post('/details/:id/contact', function (req, res) {
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
       console.log(error);
-      res.redirect('/details');
+      res.redirect('/');
     } else {
       console.log('Message Sent: '+info.response);
       res.redirect('/');
