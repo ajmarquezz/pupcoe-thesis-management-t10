@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req,res) {
-	client.query('SELECT * FROM products', (req, data)=>{
+	client.query('SELECT * FROM products ORDER BY id', (req, data)=>{
 		var list = [];
 		for (var i = 0; i < data.rows.length; i++) {
 			list.push(data.rows[i]);
