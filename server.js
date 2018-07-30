@@ -54,17 +54,21 @@ app.get('/', function(req,res) {
 	});
 });
 
-app.get('/details', (req,res)=>{
+app.get('/details/:id', (req,res)=>{
+	var id = req.params.id;
 	client.query('SELECT * FROM products', (req, data)=>{
 		var list = [];
 		for (var i = 0; i < data.rows.length+1; i++) {
+			if (i==id) {
 				list.push(data.rows[i-1]);
+			}
 		}
 		res.render('details',{
 			data: list
 		});
 	});
 });
+
 
 // app.get('/details', function(req, res){
 
