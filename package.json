@@ -10,7 +10,8 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "nodemailer": "^4.6.7",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "sendmail": "^1.4.1"
   },
   "devDependencies": {},
   "scripts": {
