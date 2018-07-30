@@ -24,26 +24,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-// app.get('/', function(req, res){
+app.get('/', function(req, res){
 
-//     return client.query('SELECT * FROM products;')
-//     .then((results) =>{
-//       console.log('results?', results);
-//       res.render('products'
-//         // , {
-//         // productName: 'Product 1 Sample',
-//         // imageUrl: '/img.jpg'
-//         //   }
-//       ,results);
+    return client.query('SELECT * FROM products;')
+    .then((results) =>{
+      console.log('results?', results);
+      res.render('products'
+        // , {
+        // productName: 'Product 1 Sample',
+        // imageUrl: '/img.jpg'
+        //   }
+      ,results);
  
-//     })
-//     .catch((err) => {
-//       console.log('error', err);
-//       res.send('Error!');
+    })
+    .catch((err) => {
+      console.log('error', err);
+      res.send('Error!');
   
-//   })
+  })
 
-// });
+});
 
 app.get('/details', function(req, res){
 
