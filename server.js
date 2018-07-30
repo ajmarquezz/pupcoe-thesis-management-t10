@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req,res) {
-	client.query('SELECT * FROM products', (req, data)=>{
+	client.query('SELECT * FROM products ORDER BY id', (req, data)=>{
 		var list = [];
 		for (var i = 0; i < data.rows.length; i++) {
 			list.push(data.rows[i]);
@@ -56,7 +56,7 @@ app.get('/', function(req,res) {
 
 app.get('/details/:id', (req,res)=>{
   var id = req.params.id;
-  client.query('SELECT * FROM Products', (req, data)=>{
+  client.query('SELECT * FROM products', (req, data)=>{
     var list = [];
     for (var i = 0; i < data.rows.length+1; i++) {
       if (i==id) {
@@ -64,7 +64,7 @@ app.get('/details/:id', (req,res)=>{
       }
     }
     res.render('details',{
-      data: list
+      data: list  
     });
   });
 });
