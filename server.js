@@ -11,8 +11,7 @@ const client = new Client({
   user: 'yatlgqilgietmr',
   password: '44093842950dce7a5e0ae0e7b00f568e414fb62c13610586ada390616c57b353',
   host: 'ec2-23-21-216-174.compute-1.amazonaws.com',
-  port: 5432,
-  ssl: true
+  port: 5432
 });
 
 const app = express();
@@ -25,26 +24,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-app.get('/', function(req, res){
+// app.get('/', function(req, res){
 
-    return client.query('SELECT * FROM products;')
-    .then((results) =>{
-      console.log('results?', results);
-      res.render('products'
-        // , {
-        // productName: 'Product 1 Sample',
-        // imageUrl: '/img.jpg'
-        //   }
-      ,results);
+//     return client.query('SELECT * FROM products;')
+//     .then((results) =>{
+//       console.log('results?', results);
+//       res.render('products'
+//         // , {
+//         // productName: 'Product 1 Sample',
+//         // imageUrl: '/img.jpg'
+//         //   }
+//       ,results);
  
-    })
-    .catch((err) => {
-      console.log('error', err);
-      res.send('Error!');
+//     })
+//     .catch((err) => {
+//       console.log('error', err);
+//       res.send('Error!');
   
-  })
+//   })
 
-});
+// });
 
 app.get('/details', function(req, res){
 
