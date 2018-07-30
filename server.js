@@ -11,7 +11,8 @@ const client = new Client({
   user: 'yatlgqilgietmr',
   password: '44093842950dce7a5e0ae0e7b00f568e414fb62c13610586ada390616c57b353',
   host: 'ec2-23-21-216-174.compute-1.amazonaws.com',
-  port: 5432
+  port: 5432,
+  ssl: true
 });
 
 const app = express();
