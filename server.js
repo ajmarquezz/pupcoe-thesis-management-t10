@@ -11,8 +11,17 @@ const client = new Client({
   user: 'yatlgqilgietmr',
   password: '44093842950dce7a5e0ae0e7b00f568e414fb62c13610586ada390616c57b353',
   host: 'ec2-23-21-216-174.compute-1.amazonaws.com',
-  port: 5432
+  port: 5432,
+  ssl: true
 });
+
+client.connect()
+	.then(function() {
+		console.log('connected to database!');
+	})
+	.catch(function() {
+		console.log('Error');
+	})
 
 const app = express();
 
@@ -91,7 +100,6 @@ app.get('/details', function(req, res){
 //     }
 //   });
 // });
-
 
 
 app.listen(process.env.PORT || 4000, function() {
