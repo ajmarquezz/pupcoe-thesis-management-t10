@@ -10,10 +10,10 @@ require('dotenv').config();
 
 //instantiate client using your db config
 const client = new Client({
-  database: 'dbfv26t4cvpk7f',
-  user: 'pldaynnnltnwja',
-  password: 'ea36c3291d38ba07e73ae896a34e7d38e16d80b39463bc191f6ea95c23429737',
-  host: 'ec2-23-23-242-163.compute-1.amazonaws.com',
+  database: 'd4eauqnb9enq45',
+  user: 'yatlgqilgietmr',
+  password: '44093842950dce7a5e0ae0e7b00f568e414fb62c13610586ada390616c57b353',
+  host: 'ec2-23-21-216-174.compute-1.amazonaws.com',
   port: 5432
 });
 
@@ -40,10 +40,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
 
-  res.render('products', {
-    productName: 'Product 1',
-    imageUrl: '/img.jpg'
+    return client.query('SELECT * FROM products;')
+    .then((results) =>{
+      console.log('results?', results);
+      res.render('products'
+        // , {
+        // productName: 'Product 1 Sample',
+        // imageUrl: '/img.jpg'
+        //   }
+      ,results);
+
+      
+    })
+    .catch((err) => {
+      console.log('error', err);
+      res.send('Error!');
+  
   })
+
 });
 
 app.get('/details', function(req, res){
