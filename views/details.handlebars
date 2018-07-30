@@ -6,32 +6,35 @@
 <div class="container" style="border: 0px !important;">
 
 	<div class="container-fliud">
+		{{#each data}}
+
 		<div class="wrapper row">
 			<div class="preview col-md-6">
 				<div class="preview-pic tab-content" style="margin-top: 80px;">
-					<div class="tab-pane active" id="pic-1"><img src="{{imageUrl}}" /></div>
+					<div class="tab-pane active" id="pic-1"><img src="{{this.img_url}}" /></div>
 				</div>
 			</div>
 			<div class="details col-md-6" style="margin-top: 80px;">
-				<h3 class="product-title" style="text-transform: uppercase;">{{productName}}</h3>
+				<h3 class="product-title" style="text-transform: uppercase;">{{this.product_name}}</h3>
 				<hr style="border-color: black !important;">
 				<h6>{{productId}} {{productType}}</h6>
 				<br><br>
-				<p class="product-description">{{description}}</p>
-				<h3 class="price">Price: <span>{{price}}</span></h3>
+				<p class="product-description">{{this.product_desc}}</p>
+				<h3 class="price">Price: <span>{{this.price}}</span></h3>
 				<h5 class="sizes">Sizes:
 					<span class="size" data-toggle="tooltip" title="small">S</span>
 					<span class="size" data-toggle="tooltip" title="medium">M</span>
 					<span class="size" data-toggle="tooltip" title="large">L</span>
 					<span class="size" data-toggle="tooltip" title="xtra large">XL</span>
 				</h5>
-				<p class="vote"><strong>{{brand}}</strong></p>
+				<p class="vote"><strong>{{this.brand}}</strong></p>
 				<div class="action">
 
 
 				</div>
 			</div>
 		</div>
+		{{/each}}
 	</div>
 	<br>
 	<br>

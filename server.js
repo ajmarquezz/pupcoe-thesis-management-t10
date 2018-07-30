@@ -15,6 +15,8 @@ const client = new Client({
   ssl: true
 });
 
+//INSERT INTO products(product_name, product_type, product_desc, brand, price, img_url) VALUES('Evian', 'Dress', 'Blue', 'Plains and Prints', 'PHP 1298', '/evian.jpg');
+
 client.connect()
 	.then(function() {
 		console.log('connected to database!');
@@ -45,20 +47,35 @@ app.get('/', function(req,res) {
 	});
 });
 
-app.get('/details', function(req, res){
-
-  res.render('details', {
-    productName: 'Product 1',
-    imageUrl: '/img.jpg',
-    description: 'Description',
-    productId: 'Product ID',
-    productType: 'Product Type',
-    brand: 'Brand',
-    price: 'Price'
-
-  })
-
+app.get('/details/:id', (req,res)=>{
+	var id = req.params.id;
+	client.query('SELECT * FROM products', (req, data)=>{
+		var list = [];
+		for (var i = 0; i < data.rows.length+1; i++) {
+			if (i==id) {
+				list.push(data.rows[i-1]);
+			}
+		}
+		res.render('details',{
+			data: list
+		});
+	});
 });
+
+// app.get('/details', function(req, res){
+
+//   res.render('details', {
+//     productName: 'Product 1',
+//     imageUrl: '/img.jpg',
+//     description: 'Description',
+//     productId: 'Product ID',
+//     productType: 'Product Type',
+//     brand: 'Brand',
+//     price: 'Price'
+
+//   })
+
+// });
 
 
 
