@@ -32,18 +32,15 @@ app.set('view engine' , 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-app.get('/ /:id', (req,res)=>{
-	var id = req.params.id;
-	client.query('SELECT * FROM Products', (req, data)=>{
+app.get('/', function(req,res) {
+	client.query('SELECT * FROM products', (req, data)=>{
 		var list = [];
-		for (var i = 0; i < data.rows.length+1; i++) {
-			if (i==id) {
-				list.push(data.rows[i-1]);
-			}
+		for (var i = 0; i < data.rows.length; i++) {
+			list.push(data.rows[i]);
 		}
 		res.render('products',{
-			data: list
+			data: list,
+			title: 'Top Products'
 		});
 	});
 });
