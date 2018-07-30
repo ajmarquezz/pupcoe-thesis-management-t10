@@ -58,11 +58,9 @@ app.get('/details/:id', (req,res)=>{
   var id = req.params.id;
   client.query('SELECT * FROM Products ORDER BY id', (req, data)=>{
     var list = [];
-    for (var i = 0; i < data.rows.length; i++) {
-
-        list.push(data.rows[i]);
-  
-    }
+		for (var i = 0; i < data.rows.length; i++) {
+				list.push(data.rows[i]);
+			}
     res.render('details',{
       data: list  
     });
