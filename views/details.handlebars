@@ -5,22 +5,19 @@
 
 <div class="container" style="border: 0px !important;">
 
-	<div class="container-fliud">
-
-
-		<div class="wrapper row">
 {{#each data}}
+	<div class="container-fliud">
+		<div class="wrapper row">
 			<div class="preview col-md-6">
 				<div class="preview-pic tab-content" style="margin-top: 80px;">
 					<div class="tab-pane active" id="pic-1"><img src="{{this.img_url}}" /></div>
 				</div>
 			</div>
-
 			<div class="details col-md-6" style="margin-top: 80px;">
 				<h3 class="product-title" style="text-transform: uppercase;">{{this.product_name}}</h3>
 				<hr style="border-color: black !important;">
 				<h6>{{productId}} {{productType}}</h6>
-				<br><br>
+				<br>
 				<p class="product-description">{{this.product_desc}}</p>
 				<h3 class="price">Price: <span>{{this.price}}</span></h3>
 				<h5 class="sizes">Sizes:
@@ -31,16 +28,13 @@
 				</h5>
 				<p class="vote"><strong>{{this.brand}}</strong></p>
 				<div class="action">
-
-
 				</div>
 			</div>
-{{/each}}
 		</div>
-
 	</div>
-	<br>
-	<center><h2 style="letter-spacing: 3px;">CONTACT US</h2></center>
+{{/each}}
+
+	<center><h2 style="letter-spacing: 3px; margin-top: 70px;">CONTACT US</h2></center>
 	<hr style="border-color: black !important; margin: 15px 250px 15px 250px;">
 	<br>
 	<form action="/details/contact" id="contact-form" method="post" role="form">
@@ -73,6 +67,5 @@
 			<button class="btn btn-dark col-md-12" type="submit">Submit</button>
 		</fieldset>
 	</form>
-	<br>
-	<br>
+
 </div>
