@@ -54,61 +54,21 @@ app.get('/', function(req,res) {
 	});
 });
 
-app.get('/details', (req,res)=>{
-	client.query('SELECT * FROM products', (req, data)=>{
-		var list = [];
-		for (var i = 0; i < data.rows.length+1; i++) {
-				list.push(data.rows[i-1]);
-		}
-		res.render('details',{
-			data: list
-		});
-	});
+app.get('/details/:id', (req,res)=>{
+  var id = req.params.id;
+  client.query('SELECT * FROM Products', (req, data)=>{
+    var list = [];
+    for (var i = 0; i < data.rows.length+1; i++) {
+      if (i==id) {
+        list.push(data.rows[i-1]);
+      }
+    }
+    res.render('details',{
+      data: list
+    });
+  });
 });
 
-// app.get('/details', function(req, res){
-
-//   res.render('details', {
-//     productName: 'Product 1',
-//     imageUrl: '/img.jpg',
-//     description: 'Description',
-//     productId: 'Product ID',
-//     productType: 'Product Type',
-//     brand: 'Brand',
-//     price: 'Price'
-
-//   })
-
-// });
-
-//POST route from contact form
-// app.post('/contact', function (req, res) {
-//   let mailOpts, smtpTrans;
-//   smtpTrans = nodemailer.createTransport({
-//     host: 'smtp.gmail.com',
-//     port: 465,
-//     secure: true,
-//     auth: {
-//       user: GMAIL_USER,
-//       pass: GMAIL_PASS
-//     }
-//   });
-//   mailOpts = {
-//     from: req.body.name + ' &lt;' + req.body.email + '&gt;',
-//     to: GMAIL_USER,
-//     subject: 'New message from contact form at tylerkrys.ca',
-//     text: `${req.body.name} (${req.body.email}) says: ${req.body.message}`
-//   };
-
-//   smtpTrans.sendMail(mailOpts, function (error, response) {
-//     if (error) {
-//       res.render('contact-failure');
-//     }
-//     else {
-//       res.render('contact-success');
-//     }
-//   });
-// });
 
 app.post('/details/contact', function (req, res) {
 
