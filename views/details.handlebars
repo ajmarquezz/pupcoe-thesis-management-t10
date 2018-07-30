@@ -8,7 +8,7 @@
 
 	<div class="container-fliud">
 		<div class="wrapper row">
-{{#each data}}
+			{{#each data}}
 			<div class="preview col-md-6">
 				<div class="preview-pic tab-content" style="margin-top: 80px;">
 					<div class="tab-pane active" id="picture"><img src="{{this.img_url}}" /></div>
@@ -31,26 +31,25 @@
 				<div class="action">
 				</div>
 			</div>
-{{/each}}
+			{{/each}}
 		</div>
 	</div>
 
 	<center><h2 style="letter-spacing: 3px; margin-top: 70px;">CONTACT US</h2></center>
 	<hr style="border-color: black !important; margin: 15px 250px 15px 250px;">
-	<br>
 
 
 
 
-  <center><h1>{{msg}}</h1></center>
-  <div>
-  	<br>
-    <center><h5 class="card-title">{{msg2}}</h5></center>
-  </div>
+	<center><h1>{{msg}}</h1></center>
+	<div>
+		<br>
+		<center><h5 class="card-title">{{msg2}}</h5></center>
+	</div>
 
 
 
-{{#each data}}
+	{{#each data}}
 
 	<form action="/details/{{this.id}}/contact" id="contact-form" method="POST" role="form">
 		<!-- method="POST" action="{{this.id}}/send" -->
@@ -83,5 +82,5 @@
 			<button class="btn btn-dark col-md-12" type="submit">Submit</button>
 		</fieldset>
 	</form>
-{{/each}}
+	{{/each}}
 </div>

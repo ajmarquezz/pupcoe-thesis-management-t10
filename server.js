@@ -21,12 +21,12 @@ const client = new Client({
 //INSERT INTO products(product_name, product_type, product_desc, brand, price, img_url) VALUES('Evian', 'Dress', 'Blue', 'Plains and Prints', 'PHP 1298', '/evian.jpg');
 
 client.connect()
-	.then(function() {
-		console.log('connected to database!');
-	})
-	.catch(function() {
-		console.log('Error');
-	})
+.then(function() {
+  console.log('connected to database!');
+})
+.catch(function() {
+  console.log('Error');
+})
 
 
 const app = express();
@@ -42,16 +42,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', function(req,res) {
-	client.query('SELECT * FROM products ORDER BY id', (req, data)=>{
-		var list = [];
-		for (var i = 0; i < data.rows.length; i++) {
-			list.push(data.rows[i]);
-		}
-		res.render('products',{
-			data: list,
-			title: 'Top Products'
-		});
-	});
+  client.query('SELECT * FROM products ORDER BY id', (req, data)=>{
+    var list = [];
+    for (var i = 0; i < data.rows.length; i++) {
+      list.push(data.rows[i]);
+    }
+    res.render('products',{
+      data: list,
+      title: 'Top Products'
+    });
+  });
 });
 
 app.get('/details/:id', (req,res)=>{
