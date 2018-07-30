@@ -74,26 +74,30 @@ app.post('/details/:id/contact', function (req, res) {
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS
+      user: 'dbms.projects1819@gmail.com',
+      pass: 'dbms1819t10'
     }
   });
 
   var mailOptions = {
-    from: '"Shop" <process.env.GMAIL_USER>',
-    to: process.env.GMAIL_USER,
-    subject: 'New Message from Shop Client',
+    from: '"Shop Mailer" <dbms.projects1819@gmail.com>',
+    to: 'patgnavarro@gmail.com, marquez.josealfonso@gmail.com',
+    subject: 'New Message from Client',
     text: 'You have a submission with the following details: Name: '+req.body.name+'Email: '+req.body.email+'Phone Number: '+req.body.phone+'Product ID: '+req.body.product+'Quantity: '+req.body.quantity,
     html: '<p>You have a submission with the following details:</p><ul><li>Name: '+req.body.name+'</li><li>Email: '+req.body.email+'</li><li>Phone Number: '+req.body.phone+'</li><li>Product ID: '+req.body.product+'</li><li>Quantity: '+req.body.quantity+'</li></ul>'
   };
 
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
-      console.log(error);
-      res.redirect('/');
+      res.render('details',{
+        msg: 'There was a problen in sending your message.',
+        msg2: 'Continue Shopping and Try Again?'
+      });
     } else {
-      console.log('Message Sent: '+info.response);
-      res.redirect('/');
+      res.render('details',{
+        msg: 'Your message has been sent!',
+        msg2: 'Continue Shopping?'
+      });
     }
   });
 });
