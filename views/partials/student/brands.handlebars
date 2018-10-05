@@ -1,0 +1,47 @@
+<style type="text/css">
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+section{
+  margin:50px 150px 150px 150px !important;
+}
+::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+</style>
+
+<script type="text/javascript">
+$(window).on("load resize ", function() {
+  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+  $('.tbl-header').css({'padding-right':scrollWidth});
+}).resize();
+</script>
+  <h1>List of Brands</h1>
+<section>
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th>Brand Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+{{#each brands}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td>{{this.description}}</td>
+        </tr>
+{{/each}}
+      </tbody>
+    </table>
+  </div>
+</section> 

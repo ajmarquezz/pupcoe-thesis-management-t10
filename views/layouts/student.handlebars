@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>  
+  <script src="https://use.fontawesome.com/f38df1ac13.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <title>A&P | {{title}}</title>
+</head> 
+<body>
+  <style type="text/css">
+  @import url('https://fonts.googleapis.com/css?family=Gothic+A1|Kaushan+Script|Libre+Baskerville|Lobster');
+  .navbar-brand  span{
+    color: gray;
+    font-size:25px;font-weight:700;letter-spacing:0.1em;
+    font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive;
+  }
+  .navbar-brand {
+    color: black !important;
+    font-size:25px;
+    font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive;
+    font-weight:700;
+    letter-spacing:0.1em;
+  }
+  .navbar-brand:hover{
+    background-color: white;
+  }
+  .navbar-nav .nav-item .nav-link{
+    padding: 1.1em 1em!important;
+    font-size: 120%;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: black;
+    font-family: 'Gothic A1', sans-serif;
+  }
+  .navbar-nav .nav-item .nav-link:hover{
+    color:#373C42; background-color: white;
+  }
+  .navbar-expand-md .navbar-nav .dropdown-menu{
+    border-top:3px solid #373C42;
+  }
+  .dropdown-item:hover{
+    background-color:#373C42;
+    color:#fff;
+  }
+  nav{
+    -webkit-transition: padding-top .3s,padding-bottom .3s;
+    -moz-transition: padding-top .3s,padding-bottom .3s;
+    transition: padding-top .3s,padding-bottom .3s;
+    border: none;
+  }
+
+
+  /* mobile view */
+  @media (max-width:500px)
+  {
+    .navbar-nav{
+      background-color:#000;
+      border-top:3px solid #fed136;
+      color:black;
+      z-index:1;
+      margin-top:5px;
+    }
+    .navbar-nav .nav-item .nav-link{
+      padding: 0.7em 1em!important;
+      font-size: 100%;
+      font-weight: 500;
+    }
+
+  }
+  .shrink {
+    transition: background-color 200ms linear;
+    background-color: white;
+    border-bottom: 1px solid gainsboro;
+
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript">
+
+  $(function() {
+    $(document).scroll(function() {
+      var $nav = $(".navbar");
+      $nav.toggleClass('shrink', $(this).scrollTop() > $nav.height());
+    });
+  });
+  </script>
+
+  <nav class="navbar navbar-expand-md fixed-top" id="banner">
+    <div class="container">
+      <!-- Brand -->
+      <a class="navbar-brand" href="/"><span>A&P</span> Clothing</a>
+
+      <!-- Toggler/collapsibe Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/shop/products?p=1">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/shop/brands">Brands</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/shop/categories">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out</a>
+          </li> 
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <br>
+  <br>
+  <br>
+  {{{body}}}
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

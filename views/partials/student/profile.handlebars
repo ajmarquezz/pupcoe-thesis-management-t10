@@ -1,0 +1,78 @@
+<div style="margin-top: 50px;">
+<center><h2>PROFILE</h2></center>
+<form method="POST" action="/updateprofile">
+
+  {{#each user}}
+
+  <div style="width: 1000px;">
+    <div class="form-row">
+      <div class="col">
+        <label class="label" for="input">
+          FIRST NAME
+        </label>
+        <input class="input" type="text" id="first_name" name="first_name" value="{{this.first_name}}">
+      </div>
+      <div class="col">
+        <label class="label" for="input">
+          LAST NAME
+        </label>
+        <input class="input" type="text" id="last_name" name="last_name" value="{{this.last_name}}">
+      </div>
+    </div>
+
+
+      <div class="form-row">
+        <div class="col">
+          <label class="label" for="input">
+            EMAIL
+          </label>  
+          <input class="input e" type="email" id="email" name="email" value="{{this.email}}">
+        </div>
+        <div class="col">
+          <label class="label" for="input">
+            PASSWORD
+          </label> 
+          <input class="input e" type="password" id="password" name="password" value="{{this.password}}">
+        </div>
+      </div>
+
+<br><br>
+
+<center style="margin-bottom: 45px;"><h2>MAILING ADDRESS</h2></center>
+    <div class="form-row">
+      <div class="col">
+        <label class="label" for="input">
+          STREET
+        </label> 
+        <input class="input" type="text" id="street" name="street" value="{{this.street}}">
+      </div>
+      <div class="col">
+        <label class="label" for="input">
+          MUNICIPALITY
+        </label> 
+        <input class="input" type="text" id="municipality" name="municipality" value="{{this.municipality}}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <label class="label" for="input">
+          PROVINCE
+        </label> 
+        <input class="input" type="text" id="province" name="province" value="{{this.province}}">
+      </div>
+      <div class="col">
+        <label class="label" for="input">
+          ZIPCODE
+        </label> 
+        <input class="input" type="text" id="zipcode" name="zipcode" value="{{this.zipcode}}">
+      </div>
+    </div>
+          {{/each}}
+
+
+        <center><input class="btn btn-dark col-md-12" type="submit" value="UPDATE PROFILE"></input></center>
+
+    </div>
+    </form>
+
+</div>

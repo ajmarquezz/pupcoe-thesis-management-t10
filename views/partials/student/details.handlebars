@@ -1,0 +1,77 @@
+<div class="container" style="border: 0px !important;">
+	<div class="container-fliud">
+		<div class="wrapper row">
+			<div class="preview col-md-6">
+				<div class="preview-pic tab-content" style="margin-top: 50px;">
+					<div class="tab-pane active" id="picture"> <img src="{{img}}" alt="{{img}}"></div>
+				</div>
+			</div>
+			<div class="details col-md-6" style="margin-top: 50px;">
+				<h3 class="product-title" style="text-transform: uppercase;">{{name}}</h3>
+				<p class="product-description">{{description}}</p>
+				<i><p class="product-tagline">"{{tagline}}"</p></i>
+				<h6>Details:</h6>
+				<ul>
+					<li>Product ID: {{id}}</li>
+					<li>Warranty: {{warranty}} Week/s</li>
+					<li>Brand: {{brandname}}</li>
+					<li>Category: {{category}}</li>
+				</ul>
+				<h3 class="price">Price: <span>PHP {{price}}</span></h3>
+        <center><h2 name="order" style="letter-spacing: 3px; margin-top: 50px; margin-bottom: 0px !important;">ORDER REQUEST FORM</h2></center>
+        <form action="/details/{{id}}/order" id="contact-form" method="POST" role="form">
+          <fieldset>
+            <div class="form-row" style="margin-bottom: 14px;">
+              <div class="col">
+                <label for="name">First Name: </label>
+                <input class="form-control" id="firstname" name="firstname" type="text" placeholder="First Name" required>
+              </div>
+              <div class="col">
+                <label for="email">Last Name: </label>
+                <input class="form-control" id="lastname" name="lastname" type="text" placeholder="Last Name" required>
+              </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 14px;">
+              <div class="col">
+                <label for="name">Street: </label>
+                <input class="form-control" id="street" name="street" type="text" placeholder="Street" required>
+              </div>
+              <div class="col">
+                <label for="email">Municipality: </label>
+                <input class="form-control" id="municipality" name="municipality" type="text" placeholder="Municipality" required>
+              </div>
+              <div class="col">
+                <label for="email">Province: </label>
+                <input class="form-control" id="province" name="province" type="text" placeholder="Province" required>
+              </div>
+              <div class="col">
+                <label for="email">Zip Code: </label>
+                <input class="form-control" id="zipcode" name="zipcode" type="number" placeholder="Zipcode" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <label for="email">Email: </label>
+                <input class="form-control" id="email" name="email" type="text" placeholder="Email" required>
+              </div>
+              <div class="col">
+                <label for="phone">Phone: </label>
+                <input class="form-control" id="phone" name="phone" type="number" placeholder="09444444444" required>
+              </div>
+              <div class="col">
+                <label for="product">Product ID: </label>
+                <input class="form-control" id="product" name="product" type="number" readonly value="{{id}}" required>
+              </div>
+              <div class="col">
+                <label for="quantity">Quantity: </label>
+                <input class="form-control" id="quantity" name="quantity" type="number" placeholder="1" required>
+              </div>  
+            </div>
+            <br>
+            <input class="btn btn-dark col-md-12" type="submit" style="color: white;" value="ORDER NOW"></input>
+          </fieldset>
+        </form>
+			</div>
+		</div>
+	</div>
+</div>

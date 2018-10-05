@@ -169,7 +169,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     res.redirect('/');
 //   }
 // }
-// --------------------------------------------------------START OF ROUTES-----------------------------------------------------------//
+
+//////////////////////////////////////////==============START OF ROUTES===============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 // LOGIN OR REGISTTRATION PAGE
 app.get('/', function (req, res) {
@@ -358,12 +359,13 @@ app.get('/products', function (req, res, next) {
   }, function (products) {
     res.render('partials/student/products', {
       products: products,
-      title: 'Products',
-      pagination: {
-        page: req.query.p || 1,
-        limit: 10,
-        n: req.query.p || 1
-      }
+      title: 'Products'
+      // ,
+      // pagination: {
+      //   page: req.query.p || 1,
+      //   limit: 10,
+      //   n: req.query.p || 1
+      // }
     });
   });
 });
@@ -377,12 +379,13 @@ app.get('/shop/products',
       res.render('partials/student/products', {
         products: products,
         title: 'Products',
-        layout: 'student',
-        pagination: {
-          page: req.query.p || 1,
-          limit: 10,
-          n: req.query.p || 1
-        }
+        layout: 'student'
+        // ,
+        // pagination: {
+        //   page: req.query.p || 1,
+        //   limit: 10,
+        //   n: req.query.p || 1
+        // }
       });
     });
   });
@@ -395,41 +398,6 @@ app.get('/details/:id',
       res.render('partials/student/details', productData);
     });
   });
-
-// CLIENT PRODUCT ORDER
-// app.post('/details/:id/contact', function (req, res) {
-//   Customer.create(client, {
-//     first_name: req.body.firstname,
-//     last_name: req.body.lastname,
-//     email: req.body.email,
-//     street: req.body.street,
-//     municipality: req.body.municipality,
-//     province: req.body.province,
-//     zipcode: req.body.zipcode
-//   }, function (customers) {
-//     var orderData = {
-//       product_id: req.body.product,
-//       quantity: req.body.quantity,
-//       customer_id: customers.rows.customer_id
-//     };
-//     Order.create(client, orderData, function (order) {
-//       if (customers === 'error' || order === 'error') {
-//         console.log('error creating', orderData);
-//         res.render('partials/student/mailstatus', {
-//           msg: 'There was a problem creating your order.',
-//           msg2: 'Continue Shopping and Try Again?',
-//           title: 'Error'
-//         });
-//       } else if (customers === 'success' || order === 'success') {
-//         console.log('success creating');
-//         res.redirect('/products');
-//       }
-//       Product.getById(client, orderData.product_id, function (product) {
-//         res.redirect('/products');
-//       });
-//     });
-//   });
-// });
 
 app.post('/details/:id/contact', function (req, res) {
   let mailOptions1 = {
@@ -699,7 +667,7 @@ app.post('/insertclass', function (req, res) {
     product_image: req.body.image
   }, function (products) {
     if (products === 'success') {
-      res.redirect('/admin/products');
+      res.redirect('/admin/class');
       console.log('insert success');
     } else if (products === 'error') {
       console.log('error');
@@ -723,7 +691,7 @@ app.get('/admin/class/update/:id',
     Category.list(client, {}, function (categories) {
       Brand.list(client, {}, function (brands) {
         Product.getById(client, req.params.id, function (productData) {
-          res.render('partials/admin/products-update-admin', {
+          res.render('partials/admin/class-update-admin', {
             products: productData,
             layout: 'admin',
             brands: brands,
@@ -738,49 +706,23 @@ app.get('/admin/class/update/:id',
 app.post('/edit-products/:id', function (req, res) {
   client.query("UPDATE products SET name = '" + req.body.name + "', description = '" + req.body.description + "', price = '" + req.body.price + "', tagline = '" + req.body.tagline + "', warranty = '" + req.body.warranty + "',category_id = '" + req.body.category + "', brand_id = '" + req.body.brand + "', pic = '" + req.body.image + "'WHERE id = '" + req.params.id + "' ;");
   res.redirect('/admin/products');
-// Product.update(client, {productId: req.params.id}, {
-//   product_name: req.body.name,
-//   product_desc: req.body.description,
-//   product_tagline: req.body.tagline,
-//   product_price: req.body.price,
-//   product_warranty: req.body.warrranty,
-//   product_category: req.body.category,
-//   product_brand: req.body.brand,
-//   product_image: req.body.image
-// }, function (products) {
-//   if (products === 'success') {
-//     res.redirect('admin/products');
-//     console.log('insert success');
-//   } else if (products === 'error') {
-//     console.log('error');
-//     res.render('partials/admin/error', {
-//       msg: 'There was a problem updating the product.',
-//       msg2: 'Try Again?',
-//       title: 'Error',
-//       action: 'updating',
-//       page: 'product',
-//       layout: 'admin',
-//       link: '/admin/products'
-//     });
-//   }
-// });
 });
 
 // ADMIN STUDENTS LIST
 app.get('/admin/students',
   // checkAdmin,
   function (req, res) {
-    Brand.list(client, {}, function (brands) {
-      res.render('partials/admin/brands-admin', {
-        brands: brands,
+    // Brand.list(client, {}, function (brands) {
+      res.render('partials/admin/students-admin', {
+        // brands: brands,
         layout: 'admin',
         title: 'Brands'
       });
-    });
+    // });
   });
 
 // ADMIN CREATE STUDENTS
-app.post('/insertbrand', function (req, res) {
+app.post('/insertstudent', function (req, res) {
   Brand.create(client, {
     brand_name: req.body.name,
     brand_desc: req.body.description
@@ -804,25 +746,25 @@ app.post('/insertbrand', function (req, res) {
 });
 
 // ADMIN EDIT STUDENTS
-app.get('/admin/brand/update/:id',
+app.get('/admin/student/update/:id',
   // checkAdmin,
   function (req, res) {
-    Brand.getById(client, req.params.id, function (brandData) {
-      res.render('partials/admin/brands-update-admin', {
-        brands: brandData,
+    // Brand.getById(client, req.params.id, function (brandData) {
+      res.render('partials/admin/students-update-admin', {
+        // brands: brandData,
         title: 'Brand',
         layout: 'admin'
       });
-    });
+    // });
   });
 
-app.post('/edit-brands/:id', function (req, res) {
+app.post('/edit-student/:id', function (req, res) {
   Brand.update(client, {brandId: req.params.id}, {
     brand_name: req.body.name,
     brand_desc: req.body.description
   }, function (brand) {
     if (brand === 'success') {
-      res.redirect('/admin/brands');
+      res.redirect('/admin/students');
     } else if (brand === 'error') {
       res.render('partials/admin/error', {
         msg: 'There was a problem Updating the Brand.',
@@ -838,26 +780,26 @@ app.post('/edit-brands/:id', function (req, res) {
 });
 
 // ADMIN FACULTIES LIST
-app.get('/admin/categories',
+app.get('/admin/faculties',
   // checkAdmin,
   function (req, res) {
-    Category.list(client, {}, function (categories) {
-      res.render('partials/admin/categories-admin', {
-        categories: categories,
+    // Category.list(client, {}, function (categories) {
+      res.render('partials/admin/faculties-admin', {
+        // categories: categories,
         layout: 'admin',
         title: 'Categories'
       });
-    });
+    // });
   });
 
 // ADMIN CREATE FACULTIES
-app.post('/insertcategory', function (req, res) {
+app.post('/insertfaculty', function (req, res) {
   Category.create(client, {
     category_name: req.body.name
   }, function (category) {
     if (category === 'SUCCESS') {
       console.log('INSERTED');
-      res.redirect('/admin/categories');
+      res.redirect('/admin/faculties');
     } else if (category === 'ERROR') {
       res.render('partials/admin/error', {
         msg: 'There was a problem creating the Category.',
@@ -873,19 +815,19 @@ app.post('/insertcategory', function (req, res) {
 });
 
 // ADMIN EDIT FACULTIES
-app.get('/admin/category/update/:id',
+app.get('/admin/faculty/update/:id',
   // checkAdmin,
   function (req, res) {
-    Category.getById(client, req.params.id, function (categoryData) {
-      res.render('partials/admin/categories-update-admin', {
-        category: categoryData,
+    // Category.getById(client, req.params.id, function (categoryData) {
+      res.render('partials/admin/faculties-update-admin', {
+        // category: categoryData,
         title: 'Category',
         layout: 'admin'
       });
-    });
+    // });
   });
 
-app.post('/edit-categories/:id',
+app.post('/edit-faculty/:id',
   // checkAdmin,
   function (req, res) {
     Category.update(client, {categoryId: req.params.id}, {
@@ -907,58 +849,73 @@ app.post('/edit-categories/:id',
     });
   });
 
-// ORDERS LIST
-app.get('/admin/orders',
+// ADMIN GUEST LIST
+app.get('/admin/guests',
   // checkAdmin,
-  function (req, res, next) {
-    Order.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
-    }, function (query) {
-      res.render('partials/admin/orders-admin', {
-        orders: query,
+  function (req, res) {
+    // Category.list(client, {}, function (categories) {
+      res.render('partials/admin/guests-admin', {
+        // categories: categories,
         layout: 'admin',
-        title: 'Orders',
-        pagination: {
-          page: req.query.p || 1,
-          limit: 10,
-          n: req.query.p || 1
-        }
+        title: 'Categories'
       });
-    });
+    // });
   });
 
-// CUSTOMERS LIST
-app.get('/admin/customers',
-  // checkAdmin,
-  function (req, res, next) {
-    console.log(req.query);
-    Customer.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
-    }, function (query) {
-      res.render('partials/admin/customers-admin', {
-        customers: query,
+// ADMIN CREATE GUEST
+app.post('/insertguest', function (req, res) {
+  Category.create(client, {
+    category_name: req.body.name
+  }, function (category) {
+    if (category === 'SUCCESS') {
+      console.log('INSERTED');
+      res.redirect('/admin/guests');
+    } else if (category === 'ERROR') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem creating the Category.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'creating',
+        page: 'category',
         layout: 'admin',
-        title: 'Customers',
-        pagination: {
-          page: req.query.p || 1,
-          limit: 10,
-          n: req.query.p || 1
-        }
+        link: '/admin/categories'
       });
-    });
+    }
+  });
+});
+
+// ADMIN EDIT GUEST
+app.get('/admin/guest/update/:id',
+  // checkAdmin,
+  function (req, res) {
+    // Category.getById(client, req.params.id, function (categoryData) {
+      res.render('partials/admin/guests-update-admin', {
+        // category: categoryData,
+        title: 'Category',
+        layout: 'admin'
+      });
+    // });
   });
 
-// CUSTOMER DETAILS LIST
-app.get('/customer/:id',
+app.post('/edit-guest/:id',
   // checkAdmin,
-  (req, res) => {
-    Order.list(client, {}, function (orders) {
-      Order.listByCustomerId(client, req.params.id, function (orderData) {
-        res.render('partials/admin/customer-details-admin', {
-          orderData: orderData,
-          orders: orders,
-          title: 'Customer Details',
-          layout: 'admin'
+  function (req, res) {
+    Category.update(client, {categoryId: req.params.id}, {
+      category_name: req.body.name
+    }, function (category) {
+      if (category === 'success') {
+        res.redirect('/admin/guests');
+      } else if (category === 'error') {
+        res.render('partials/admin/error', {
+          msg: 'There was a problem updating the Category.',
+          msg2: 'Try Again?',
+          title: 'Error',
+          page: 'category',
+          action: 'updating',
+          layout: 'admin',
+          link: '/admin/guests'
         });
-      });
+      }
     });
   });
 
