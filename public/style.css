@@ -1,8 +1,130 @@
+h1 {
+  display: table;
+  margin: 40px auto;
+  color: black;
+  font: 30px Helvetica;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+table{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: black;
+}
+.tbl-content{
+  height:300px;
+  overflow-x:auto;
+  margin-top: 0px;
+  border: 1px solid black;
+}
+th{
+  padding: 20px 15px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 15px;
+  color: white;
+  text-transform: uppercase;
+}
+td{
+  padding: 15px;
+  text-align: center;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 15px;
+  color: black;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+section{
+  margin:15px 10px 50px 10px !important;
+}
+::-webkit-scrollbar {
+  width: 6px;
+} 
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+.knowmore{
+letter-spacing: 2px; 
+background: black; 
+border-radius: 0px;
+}
+.knowmore:hover{
+ background: #282B2F;
+}
+.back{
+  border: none !important;
+  transition: all 0.2s ease-in-out;
+  font: 18px Helvetica, Arial, sans-serif;
+  background: #282B2F;
+  color: #fff;
+  padding: 16px 40px;
+  text-decoration: none;
+  border-radius: 0px !important;
+}
+.back:hover{
+  border: none !important;
+  background: black;
+  text-decoration: none;
+}
+
+h1 {
+  display: table;
+  margin: 40px auto;
+  color: black;
+  font: 30px Helvetica;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+form {
+  display: table;
+  margin: 40px auto;
+} 
+form input[type="submit"] {
+  border: none !important;
+  transition: all 0.2s ease-in-out;
+  font: 18px Helvetica, Arial, sans-serif;
+  background: black;
+  color: #fff;
+  padding: 16px 40px;
+  text-decoration: none;
+  border-radius: 0px !important;
+}
+form input[type="submit"]:hover {
+  border: none !important;
+  background: #282B2F;
+  text-decoration: none;
+}
+
+button[type="submit"] {
+  border: none !important;
+  transition: all 0.2s ease-in-out;
+  font: 18px Helvetica, Arial, sans-serif;
+  background: black;
+  color: #fff;
+  padding: 16px 40px;
+  text-decoration: none;
+  border-radius: 0px !important;
+}
+button[type="submit"]:hover {
+  border: none !important;
+  background: #282B2F;
+  text-decoration: none;
+}
+.form-control{
+  border-radius: 0px !important;
+  border: 1px solid black;
+}
 nav a:hover {
 background-color: gray;
 color: black;
 }
-
 hr {
 padding: 0px !important;
 border-color: black !important;
@@ -20,13 +142,8 @@ transition: 0.25s box-shadow;
 .card:focus, .card:hover {
 box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
 }
-.card-inverse .card-img-overlay {
-background-color: rgba(51, 51, 51, .85);
-border-color: rgba(51, 51, 51, .85);
-}
-
 body {
-font-family: 'open sans';
+font-family: 'Helvetica' !important;
 overflow-x: hidden; 
 margin-bottom: 50px;
 }
@@ -65,8 +182,8 @@ animation-name: opacity;
 animation-duration: .3s; }
 
 .card {
-margin-top: 50px;
-background: #eee;
+margin-top: 25px;
+/*background: #eee;*/
 padding: 3em;
 line-height: 1.5em; }
 
@@ -174,3 +291,167 @@ transform: scale(3); }
 opacity: 1;
 -webkit-transform: scale(1);
 transform: scale(1); } }
+
+
+
+form {
+  display: table;
+  margin: 40px auto;
+}
+form label {
+  position: relative;
+  display: block;
+}
+form label .input {
+  font: 18px Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  display: block;
+  padding: 20px;
+  width: 480px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+form label .input::placeholder {
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica, Arial, sans-serif;
+}
+form label .input:focus, form label .input.populated {
+  padding-top: 28px;
+  padding-bottom: 12px;
+}
+form label .input:focus::placeholder, form label .input.populated::placeholder {
+  color: transparent;
+}
+form label .input:focus + span, form label .input.populated + span {
+  opacity: 1;
+  top: 10px;
+}
+form label span {
+  color: black;
+  font: 13px Helvetica, Arial, sans-serif;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+form a[type="submit"] {
+  border: none !important;
+  transition: all 0.2s ease-in-out;
+  font: 18px Helvetica, Arial, sans-serif;
+  background: black;
+  color: #fff;
+  padding: 16px 40px;
+  text-decoration: none;
+}
+form a[type="submit"]:hover {
+  border: none !important;
+  background: #282B2F;
+  text-decoration: none;
+}
+
+/********************************************************/
+
+.sttngs p {
+  color: #000;
+}
+
+.sttngs {
+  margin: 30px 200px 50px 200px;
+  background: #fff;
+  padding: 15px;
+  height: auto;
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-top: 30px;
+}
+
+.sttngs h2 {
+  letter-spacing: 2px;
+  margin: 20px;
+  color: #000;
+}
+
+input,
+select,
+textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.label {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.25em;
+  font-size: 10px;
+  text-align: left;
+  font-weight: 900;
+  padding: 0;
+  color: #111;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.input,
+.select,
+.textarea {
+  padding: 10px;
+  border: 1px solid lightgray;
+  background-color: white;
+  letter-spacing: .7px;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: gray;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.label {
+  margin-bottom: 0.25em;
+  width: 100%;
+  font-size: 10px;
+  text-align: left;
+  padding: 0;
+  color: #111;
+  border: none;
+}
+
+.p {
+  padding: 30px;
+}
+
+.input,
+.checkbox-label:before,
+.radio-label:before,
+.checkbox-label:after,
+.radio-label:after,
+.select,
+.textarea,
+.checkbox-label,
+.radio-label {
+  margin-bottom: 1em;
+}
+
+.icon {
+  width: 75px;
+  height: 75px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

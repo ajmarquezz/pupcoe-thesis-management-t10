@@ -1,140 +1,136 @@
 <style type="text/css">
-form {
-  display: table;
-  margin: 40px 0px 0px 0px auto !important;
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,300");
+
+body {
+  color: #2c3e50;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
-form label {
+
+.pagination-container {
+  margin: 100px auto;
+  text-align: center;
+}
+
+.pagination {
   position: relative;
-  display: block;
 }
-form label .input {
-  font: 18px Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
-  display: block;
-  padding: 20px;
-  width: 443px;
-  margin-bottom: 20px;
-  font-size: 18px;
-  outline: none;
-  transition: all 0.2s ease-in-out;
+
+.pagination a {
+  position: relative;
+  display: inline-block;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 8px 16px 10px;
 }
-form label .input::placeholder {
-  transition: all 0.2s ease-in-out;
-  color: #999;
-  font: 18px Helvetica, Arial, sans-serif;
-}
-form label .input:focus, form label .input.populated {
-  padding-top: 28px;
-  padding-bottom: 12px;
-}
-form label .input:focus::placeholder, form label .input.populated::placeholder {
-  color: transparent;
-}
-form label .input:focus + span, form label .input.populated + span {
-  opacity: 1;
-  top: 10px;
-}
-form label span {
-  color: black;
-  font: 13px Helvetica, Arial, sans-serif;
+
+.pagination a:before {
+  z-index: -1;
   position: absolute;
-  top: 0px;
-  left: 20px;
-  opacity: 0;
-  transition: all 0.2s ease-in-out;
+  height: 100%;
+  width: 100%;
+  content: "";
+  top: 0;
+  left: 0;
+  background-color: #2c3e50;
+  border-radius: 24px;
+  transform: scale(0);
+  transition: all 0.2s;
 }
-form a[type="submit"] {
-  border: none !important;
-  transition: all 0.2s ease-in-out;
-  font: 18px Helvetica, Arial, sans-serif;
-  background: black;
+
+.pagination a:hover,
+.pagination a .pagination-active {
   color: #fff;
-  padding: 16px 40px;
-  text-decoration: none;
 }
-form a[type="submit"]:hover {
-  border: none !important;
-  background: #282B2F;
-  text-decoration: none;
+
+.pagination a:hover:before,
+.pagination a .pagination-active:before {
+  transform: scale(1);
+}
+
+.pagination .pagination-active {
+  color: #fff;
+}
+
+.pagination .pagination-active:before {
+  transform: scale(1);
+}
+
+.pagination-newer {
+  margin-right: 50px;
+}
+
+.pagination-older {
+  margin-left: 50px;
 }
 </style>
-<br>
-<div style="padding-left: 65px;">
-<div class="row">
-  <div class="col-md-6">
-    <h1>List of Brands</h1>
+
+
+<h1>Classes</h1>
+<div style="padding-left: 50px; padding-right:76px;">
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Barch</th>
+          <th>Section</th>
+          <th>Adviser</th>
+          <th>View Details</th>
+        </tr>
+      </thead>
+    </table>
+  </div> 
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+        {{#each faculty}}
+        <tr>
+          <td>{{this.first}} {{this.last}}</td>
+          <td>{{this.productsname}}</td>
+          <td>{{this.qty}}</td>
+          <td>{{this.productsname}}</td>
+          <td>{{moment this.orderdate "lll"}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
-  <div class="col-md-5">
-    <h1>Create a Brand</h1>
-  </div>
+  <br>
+      <a class="btn btn-dark col-md-12 back" href="/admin/class/add_class">ADD CLASS</a>
 </div>
 
-
-  <div class="row">
-    <div class="col-md-6" style="padding: 0px; padding-right: 27px;">
-
-      <div class="tbl-header">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <thead>
-            <tr>
-              <th>Brand Name</th>
-              <th>Description</th>
-              <th>Update</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div class="tbl-content">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tbody>
-            {{#each brands}}
-            <tr>
-              <td>{{this.name}}</td>
-              <td>{{this.description}}</td>
-              <td><a href="/admin/brand/update/{{id}}" class="btn btn-dark knowmore">UPDATE</a></td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-md-5" style="padding: 0px !important; top:-40px;">
-      <form action="/insertbrand" id="addproduct-form" method="POST" role="form">
-        <label>
-          <input class="input" id="name" type="text" placeholder="Brand Name" name="name" required style="border: 1px solid black;">
-          <span>BRAND NAME</span>
-        </label>
-
-        <label>
-          <textarea class="input" id="description" type="text" placeholder="Brand Description" name="description" required style="border: 1px solid black;"></textarea>
-          <span>BRAND DESCRIPTION</span>
-        </label>
-
-        <center><input class="btn btn-dark col-md-12" type="submit" value="CREATE BRAND"></input></center>
-      </form> 
-    </div>
-  </div>
-</div>
+{{!-- <div class="pagination pagination-centered">
+  <ul>
+    {{#paginate pagination type="first"}}
+      <li {{#if disabled}}class="disabled"{{/if}}><a href="?p={{n}}">First</a></li>
+    {{/paginate}}
+    {{#paginate pagination type="previous"}}
+      <li {{#if disabled}}class="disabled"{{/if}}><a href="?p={{n}}">Prev</a></li>
+    {{/paginate}}
+    {{#paginate pagination type="middle" limit="{{limit}}" offset="{{offset}}"}}
+      <li {{#if active}}class="active"{{/if}}><a href="?p={{n}}">{{n}}</a></li>
+    {{/paginate}}
+    {{#paginate pagination type="next"}}
+      <li {{#if disabled}}class="disabled"{{/if}}><a href="?p={{n}}">Next</a></li>
+    {{/paginate}}
+    {{#paginate pagination type="last"}}
+      <li {{#if disabled}}class="disabled"{{/if}}><a href="?p={{n}}">Last</a></li>
+    {{/paginate}}
+  </ul>
+</div> --}}
 
 <script type="text/javascript">
-  $(function() {
-    $('input').on('change', function() {
-      var input = $(this);
-      if (input.val().length) {
-        input.addClass('populated');
-      } else {
-        input.removeClass('populated');
-      }
-    });
-
-    setTimeout(function() {
-      $('#fname').trigger('focus');
-    }, 500);
-  });
+$(window).on("load resize ", function() {
+  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+  $('.tbl-header').css({'padding-right':scrollWidth});
+}).resize();
 </script>
+
 <script type="text/javascript">
-  $(window).on("load resize ", function() {
-    var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-    $('.tbl-header').css({'padding-right':scrollWidth});
-  }).resize();
+$('.pagination-inner a').on('click', function() {
+    $(this).siblings().removeClass('pagination-active');
+    $(this).addClass('pagination-active');
+});
 </script>
