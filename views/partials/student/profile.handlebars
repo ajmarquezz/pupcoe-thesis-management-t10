@@ -1,78 +1,49 @@
-<div style="margin-top: 50px;">
-<center><h2>PROFILE</h2></center>
-<form method="POST" action="/updateprofile">
-
-  {{#each user}}
-
-  <div style="width: 1000px;">
-    <div class="form-row">
+<br>
+<h1>EDIT PROFILE</h1>
+<form action="/updatestudent" id="addproduct-form" method="POST" role="form">
+  <fieldset>
+    <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label class="label" for="input">
-          FIRST NAME
-        </label>
-        <input class="input" type="text" id="first_name" name="first_name" value="{{this.first_name}}">
+        <label for="name">First Name</label>
+        <input class="form-control" id="name" name="name" type="text" placeholder="First Name" required>
       </div>
       <div class="col">
-        <label class="label" for="input">
-          LAST NAME
-        </label>
-        <input class="input" type="text" id="last_name" name="last_name" value="{{this.last_name}}">
+        <label for="price">Last Name</label>
+        <input class="form-control" id="price" name="price" type="text" placeholder="Last Name" required>
       </div>
     </div>
-
-
-      <div class="form-row">
-        <div class="col">
-          <label class="label" for="input">
-            EMAIL
-          </label>  
-          <input class="input e" type="email" id="email" name="email" value="{{this.email}}">
-        </div>
-        <div class="col">
-          <label class="label" for="input">
-            PASSWORD
-          </label> 
-          <input class="input e" type="password" id="password" name="password" value="{{this.password}}">
-        </div>
-      </div>
-
-<br><br>
-
-<center style="margin-bottom: 45px;"><h2>MAILING ADDRESS</h2></center>
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label class="label" for="input">
-          STREET
-        </label> 
-        <input class="input" type="text" id="street" name="street" value="{{this.street}}">
-      </div>
-      <div class="col">
-        <label class="label" for="input">
-          MUNICIPALITY
-        </label> 
-        <input class="input" type="text" id="municipality" name="municipality" value="{{this.municipality}}">
+        <label for="warranty">Student Number</label>
+        <input class="form-control" id="warranty" name="warranty" type="number" placeholder="Student Number">
       </div>
     </div>
-    <div class="form-row">
+    <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label class="label" for="input">
-          PROVINCE
-        </label> 
-        <input class="input" type="text" id="province" name="province" value="{{this.province}}">
-      </div>
-      <div class="col">
-        <label class="label" for="input">
-          ZIPCODE
-        </label> 
-        <input class="input" type="text" id="zipcode" name="zipcode" value="{{this.zipcode}}">
+        <label for="warranty">E-mail</label>
+        <input class="form-control" id="warranty" name="warranty" type="email" placeholder="E-mail">
       </div>
     </div>
-          {{/each}}
-
-
-        <center><input class="btn btn-dark col-md-12" type="submit" value="UPDATE PROFILE"></input></center>
-
+    <div class="form-row" style="margin-bottom: 14px;">
+      <div class="col">
+        <label for="warranty">Phone Number</label>
+        <input class="form-control" id="warranty" name="warranty" type="number" placeholder="Phone Number">
+      </div>
     </div>
-    </form>
-
-</div>
+    <div class="form-row" style="margin-bottom: 14px;">
+      <div class="col">
+        <label for="name">Password</label>
+        <input class="form-control" id="tagline" name="tagline" type="password" placeholder="Password"></input>
+      </div>
+      <div class="col">
+        <label for="price">Confirm Password</label>
+        <input class="form-control" id="description" name="description" type="password" placeholder="Confirm Password"></input>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <a class="btn btn-dark col-md-6 back" href="/admin/faculties">BACK</a>
+    <input class="btn btn-dark col-md-6" type="submit" value="UPDATE PROFILE"></input>
+  </div>
+  </fieldset>
+</form> 

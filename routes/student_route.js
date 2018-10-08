@@ -10,7 +10,7 @@ studentRoute.get('/',
   function (req, res, next) {
     // Product.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
     // }, function (products) {
-      res.render('partials/student/products', {
+      res.render('partials/student/profile', {
         // products: products,
         title: 'Products',
         layout: 'student'
@@ -23,6 +23,34 @@ studentRoute.get('/',
       });
     // });
   });
+
+studentRoute.post('/updatestudent', function (req, res) {
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      console.log('error');
+    } else {
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        if (err) {
+          console.log('error');
+        } else {
+          Customer.updateProfile(client, {customerId: req.user.id}, {
+            email: req.body.email,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            street: req.body.street,
+            municipality: req.body.municipality,
+            province: req.body.province,
+            zipcode: req.body.zipcode,
+            password: hash,
+            // userrole: 'user'
+          }, function (user) {
+            res.redirect('/home');
+          });
+        };
+      });
+    };
+  });
+});
 
 
 // CLIENT PRODUCT DETAILS
