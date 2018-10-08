@@ -19,18 +19,17 @@ const saltRounds = 10;
 var flash = require('connect-flash');
 // var crypto = require('crypto');
 // var async = require('async');
-// var userrole;
 
 Handlebars.registerHelper('paginate', paginate);
 MomentHandler.registerHelpers(Handlebars);
 require('dotenv').config();
 
 // callbacks
-const Product = require('./models/product.js');
-const Customer = require('./models/customer.js');
-const Order = require('./models/order.js');
-const Brand = require('./models/brand.js');
-const Category = require('./models/category.js');
+// const Product = require('./models/product.js');
+// const Customer = require('./models/customer.js');
+const Faculty = require('./models/faculty.js');
+const Class = require('./models/class.js');
+const Student = require('./models/student.js');
 // const Email = require('./utils/email.js');
 
 // instantiate client using your db config
@@ -64,10 +63,8 @@ passport.use(new Strategy({
 },
 function (email, password, cb) {
   Customer.getByEmail(client, email, function (user) {
-    // if (err) { return cb(err); }
     if (!user) { return cb(null, false); }
     bcrypt.compare(password, user.password).then(function (res) {
-    // if (user.password !== password) { return cb(null, false); }
       if (res === false) { return cb(null, false); }
       return cb(null, user);
     });
@@ -87,7 +84,8 @@ passport.deserializeUser(function (id, cb) {
 });
 
 app.use(cookieParser());
-// passport initialization
+
+//passport initialization
 app.use(session({
   key: 'user_sid',
   secret: 'keyboard cat',
@@ -98,8 +96,8 @@ app.use(session({
   }
 }));
 app.use(flash());
-// Initialize Passport and restore authentication state, if any, from the
-// session.
+
+// Initialize Passport and restore authentication state, if any, from the session.
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -122,22 +120,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   }
 // };
 
-// // CHECK IF ADMIN
-// function checkAdmin (req, res, next) {
-//   if (req.isAuthenticated()) {
-//     Customer.getCustomer(client, {customerId: req.user.id}, function (user) {
-//       userrole = user[0].userrole;
-//       console.log('role:', userrole);
-//       if (userrole === 'admin') {
-//         return next();
-//       } else {
-//         res.redirect('/home');
-//       }
-//     });
-//   } else {
-//     res.redirect('/');
-//   }
-// }
+// CHECK IF ADMIN
+function checkAdmin (req, res, next) {
+  if (req.isAuthenticated()) {
+    Faculty.getFaculty(client, {facultyId: req.user.id}, function (user) {
+      is_admin = user[0].is_admin;
+      console.log('role:', is_admin);
+      if (is_admin === 'true') {
+        return next();
+      } else {
+        res.redirect('/faculty');
+      }
+    });
+  } else {
+    res.redirect('/');
+  }
+}
 
 // // CHECK IF FACULTY
 // function checkFaculty (req, res, next) {
@@ -190,62 +188,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   }
 // }
 
-//////////////////////////////////////////==============START OF ROUTES===============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-// LOGIN OR REGISTTRATION PAGE
+// LOGIN
 app.get('/', function (req, res) {
   res.render('partials/login/login', {
     title: 'Welcome'
   });
 });
 
-// LOGIN
 app.post('/login',
   passport.authenticate('local', {
     successRedirect: '/admin',
     failureRedirect: '/'
   })
 );
-
-// UPDATE PROFILE
-app.get('/profile',
-  // checkAuthentication,
-  function (req, res) {
-    Customer.getCustomer(client, {customerId: req.user.id}, function (user) {
-      res.render('partials/student/profile', {
-        user: user,
-        layout: 'student'
-      });
-    });
-  });
-
-app.post('/updateprofile', function (req, res) {
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    if (err) {
-      console.log('error');
-    } else {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        if (err) {
-          console.log('error');
-        } else {
-          Customer.updateProfile(client, {customerId: req.user.id}, {
-            email: req.body.email,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            street: req.body.street,
-            municipality: req.body.municipality,
-            province: req.body.province,
-            zipcode: req.body.zipcode,
-            password: hash,
-            // userrole: 'user'
-          }, function (user) {
-            res.redirect('/home');
-          });
-        };
-      });
-    };
-  });
-});
 
 // LOGOUT
 app.get('/logout', function (req, res) {
@@ -373,27 +329,18 @@ app.get('/forgot', function (req, res) {
 //   });
 // });
 
-///////////////////////////////////////////=============ADMIN============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
+//ROUTES
 var adminRoute = require("./routes/admin_route");
 app.use("/admin", adminRoute);
-
-///////////////////////////////////////////=============FACULTY============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 var facultyRoute = require("./routes/faculty_route");
 app.use("/faculty", facultyRoute);
 
-///////////////////////////////////////////=============GUEST============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 var guestRoute = require("./routes/guest_route");
 app.use("/guest", guestRoute);
 
-///////////////////////////////////////////=============NON-LOGGED============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 var nonLoggedRoute = require("./routes/non_logged_route");
 app.use("/visitor", nonLoggedRoute);
-
-///////////////////////////////////////////=============STUDENT============\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 var studentRoute = require("./routes/student_route");
 app.use("/student", studentRoute);

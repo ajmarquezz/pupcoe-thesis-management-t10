@@ -11,40 +11,40 @@ input[type=checkbox]
   <fieldset>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label for="name">First Name</label>
-        <input class="form-control" id="name" name="name" type="text" placeholder="First Name" required>
+        <label>First Name</label>
+        <input class="form-control" id="first_name" name="first_name" type="text" placeholder="First Name" required>
       </div>
       <div class="col">
-        <label for="price">Last Name</label>
-        <input class="form-control" id="price" name="price" type="text" placeholder="Last Name" required>
+        <label>Last Name</label>
+        <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Last Name" required>
       </div>
     </div>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label for="warranty">E-mail</label>
-        <input class="form-control" id="warranty" name="warranty" type="email" placeholder="E-mail">
+        <label>E-mail</label>
+        <input class="form-control" id="email" name="email" type="email" placeholder="E-mail">
       </div>
     </div>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label for="warranty">Phone Number</label>
-        <input class="form-control" id="warranty" name="warranty" type="number" placeholder="Phone Number">
+        <label>Phone Number</label>
+        <input class="form-control" id="phone" name="phone" type="number" placeholder="Phone Number">
       </div>
     </div>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label for="name">Password</label>
-        <input class="form-control" id="tagline" name="tagline" type="password" placeholder="Password"></input>
+        <label>Password</label>
+        <input class="form-control" id="password" name="password" type="password" placeholder="Password"></input>
       </div>
-      <div class="col">
-        <label for="price">Confirm Password</label>
-        <input class="form-control" id="description" name="description" type="password" placeholder="Confirm Password"></input>
-      </div>
+{{!--       <div class="col">
+        <label>Confirm Password</label>
+        <input class="form-control" id="confirm_password" name="password" type="password" placeholder="Confirm Password"></input>
+      </div> --}}
     </div>
     <div class="form-row">
       <div class="col">
-        <label for="name">Make Admin</label>
-        <input class="form-control" id="image" name="image" type="checkbox"></input>
+        <label>Make Admin</label>
+        <input class="form-control" id="admin" name="admin" type="checkbox"></input>
       </div>
     </div>
     <br>
@@ -54,3 +54,19 @@ input[type=checkbox]
   </div>
   </fieldset>
 </form> 
+{{!-- 
+<script type="text/javascript">
+var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+</script> --}}

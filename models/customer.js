@@ -197,6 +197,4 @@ var Customer = {
   }
 };
 
-//  gawa ka pat ng layout pag logged in, yung magiging "Log Out"
-//  yung "Log In" sa navbar
 module.exports = Customer;

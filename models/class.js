@@ -1,27 +1,5 @@
 /* eslint-disable new-cap */
-var Brand = {
-
-  mostOrdered: (client, filter, callback) => {
-    const orders = `
-    SELECT DISTINCT 
-    brands.name,
-    SUM (orders.quantity)
-    FROM
-    orders
-    INNER JOIN products
-    ON products.id = orders.product_id
-    INNER JOIN brands
-    ON brands.id = products.brand_id
-    GROUP BY
-    brands.name
-    ORDER BY SUM DESC limit 3
-    `;
-
-    client.query(orders, (req, data) => {
-      callback(data.rows);
-      console.log(data.rows);
-    });
-  },
+var Class = {
 
   getById: (client, brandId, callback) => {
     const listQuery = `
@@ -76,4 +54,4 @@ var Brand = {
   }
 };
 
-module.exports = Brand;
+module.exports = Class;
