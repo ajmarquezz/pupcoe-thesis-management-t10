@@ -2,7 +2,8 @@ module.exports = (function() {
   'use strict';
 
 const { Client } = require('pg');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const Faculty = require('../models/faculty.js');
 const Class = require('../models/class.js');

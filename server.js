@@ -14,7 +14,8 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var session = require('express-session');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 var flash = require('connect-flash');
 // var crypto = require('crypto');
@@ -62,7 +63,7 @@ passport.use(new Strategy({
   passReqToCallback: true
 },
 function (email, password, cb) {
-  Customer.getByEmail(client, email, function (user) {
+  Faculty.getByEmail(client, email, function (user) {
     if (!user) { return cb(null, false); }
     bcrypt.compare(password, user.password).then(function (res) {
       if (res === false) { return cb(null, false); }
@@ -77,7 +78,7 @@ passport.serializeUser(function (user, cb) {
 });
 
 passport.deserializeUser(function (id, cb) {
-  Customer.getById(client, id, function (user) {
+  Faculty.getById(client, id, function (user) {
     // if (err) { return cb(err); }
     cb(null, user);
   });

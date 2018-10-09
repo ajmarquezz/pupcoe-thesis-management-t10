@@ -53,7 +53,20 @@ var Faculty = {
       console.log(orderData);
     });
   },
-
+getByEmail: (client, email, callback) => {
+  const listQuery = `
+    SELECT *
+    FROM faculty
+    WHERE email = '${email}'
+    `;
+  client.query(listQuery, (req, data) => {
+    if (data.rowCount) {
+      callback(data.rows[0]);
+    } else {
+      callback();
+    }
+  });
+},
   list: (client, filter, callback) => {
     // limit, offset, 
     const listQuery = `
