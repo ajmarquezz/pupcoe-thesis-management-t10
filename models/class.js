@@ -20,8 +20,8 @@ var Class = {
   },
 
   list: (client, filter, callback) => {
-    const brandListQuery = `SELECT * FROM brands ORDER BY name`;
-    client.query(brandListQuery, (req, data) => {
+    const listQuery = `SELECT * FROM class`;
+    client.query(listQuery, (req, data) => {
       console.log(data.rows);
       callback(data.rows);
     });

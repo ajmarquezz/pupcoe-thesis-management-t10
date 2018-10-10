@@ -32,26 +32,26 @@
   <style type="text/css">
   @import url('https://fonts.googleapis.com/css?family=Gothic+A1|Kaushan+Script|Libre+Baskerville|Lobster');
   .navbar-brand  span{
-    color: gray;
+    color: white;
     font-size:25px;font-weight:700;letter-spacing:0.1em;
     font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive;
   }
   .navbar-brand {
-    color: black !important;
+    color: lightgray !important;
     font-size:25px;
     font-family: 'Kaushan Script','Helvetica Neue',Helvetica,Arial,cursive;
     font-weight:700;
     letter-spacing:0.1em;
   }
   .navbar-brand:hover{
-    background-color: white;
+    background-color: transparent !important;
   }
   .navbar-nav .nav-item .nav-link{
     padding: 1.1em 1em!important;
     font-size: 120%;
     font-weight: 500;
     letter-spacing: 1px;
-    color: black;
+    color: gainsboro;
     font-family: 'Gothic A1', sans-serif;
   }
   .navbar-nav .nav-item .nav-link:hover{
@@ -107,10 +107,10 @@
   });
   </script>
 
-  <nav class="navbar navbar-expand-md fixed-top" id="banner">
+  <nav style="background-color: black !important;" class="navbar navbar-expand-md fixed-top" id="banner">
     <div class="container">
       <!-- Brand -->
-      <a class="navbar-brand" href="/"><span>Thesis</span> Management Admin</a>
+      <a class="navbar-brand" href="/"><span>Admin</span> Dashboard</a>
 
       <!-- Toggler/collapsibe Button -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -131,6 +131,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/admin">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/faculty">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Log Out</a>

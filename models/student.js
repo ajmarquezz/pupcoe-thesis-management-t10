@@ -1,22 +1,47 @@
 /* eslint-disable new-cap */
 var Student = {
 
-  getById: (client, categoryId, callback) => {
-    const listQuery = `
-    SELECT id, name
-    FROM products_category 
-    WHERE id = '${categoryId}'
+  getStudent: (client, studentId, callback) => {
+    const getQuery = `
+      SELECT *
+      FROM students
+      WHERE id = '${studentId.studentId}'
     `;
-
-    client.query(listQuery, (req, data) => {
-      var categoryData = {
-        id: data.rows[0].id,
-        name: data.rows[0].name
-      };
-      callback(categoryData);
-      console.log(categoryData);
+    client.query(getQuery, (req, result) => {
+      callback(result.rows);
     });
   },
+
+  getById: (client, studentId, callback) => {
+    const listQuery = `
+      SELECT *
+      FROM students
+      WHERE id = '${studentId}'
+    `;
+    client.query(listQuery, (req, data) => {
+      if (data.rowCount) {
+        callback(data.rows[0]);
+      } else {
+        callback();
+      }
+    });
+  },
+
+getByEmail: (client, email, callback) => {
+  const listQuery = `
+    SELECT *
+    FROM students
+    WHERE email = '${email}'
+    `;
+  client.query(listQuery, (req, data) => {
+    if (data.rowCount) {
+      callback(data.rows[0]);
+    } else {
+      callback();
+    }
+  });
+},
+
 
   list: (client, filter, callback) => {
     // limit, offset, 

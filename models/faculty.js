@@ -12,47 +12,63 @@ var Faculty = {
     });
   },
 
-  listByCustomerId: (client, customerId, callback) => {
-    const ordersQuery = `
-    SELECT
-    customers.id AS id,
-    customers.first_name AS first,
-    customers.last_name AS last,
-    customers.email AS email,
-    customers.street AS street,
-    customers.municipality AS municipality,
-    customers.province AS province,
-    customers.zipcode AS zipcode,
-    products.name AS productsname,
-    orders.quantity AS qty,
-    orders.order_date AS orderdate
-    FROM orders
-    INNER JOIN customers
-    ON orders.customer_id=customers.id
-    INNER JOIN products
-    ON orders.product_id=products.id
-    WHERE customers.id = ${customerId}
-    ORDER BY orderdate DESC
-    `;
+  // listByCustomerId: (client, customerId, callback) => {
+  //   const ordersQuery = `
+  //   SELECT
+  //   customers.id AS id,
+  //   customers.first_name AS first,
+  //   customers.last_name AS last,
+  //   customers.email AS email,
+  //   customers.street AS street,
+  //   customers.municipality AS municipality,
+  //   customers.province AS province,
+  //   customers.zipcode AS zipcode,
+  //   products.name AS productsname,
+  //   orders.quantity AS qty,
+  //   orders.order_date AS orderdate
+  //   FROM orders
+  //   INNER JOIN customers
+  //   ON orders.customer_id=customers.id
+  //   INNER JOIN products
+  //   ON orders.product_id=products.id
+  //   WHERE customers.id = ${customerId}
+  //   ORDER BY orderdate DESC
+  //   `;
 
-    client.query(ordersQuery, (req, data) => {
-      var orderData = {
-        id: data.rows[0].id,
-        firstname: data.rows[0].first,
-        lastname: data.rows[0].last,
-        email: data.rows[0].email,
-        street: data.rows[0].street,
-        municipality: data.rows[0].municipality,
-        province: data.rows[0].province,
-        zipcode: data.rows[0].zipcode,
-        productsname: data.rows[0].productsname,
-        qty: data.rows[0].qty,
-        orderdate: data.rows[0].orderdate
-      };
-      callback(orderData);
-      console.log(orderData);
+  //   client.query(ordersQuery, (req, data) => {
+  //     var orderData = {
+  //       id: data.rows[0].id,
+  //       firstname: data.rows[0].first,
+  //       lastname: data.rows[0].last,
+  //       email: data.rows[0].email,
+  //       street: data.rows[0].street,
+  //       municipality: data.rows[0].municipality,
+  //       province: data.rows[0].province,
+  //       zipcode: data.rows[0].zipcode,
+  //       productsname: data.rows[0].productsname,
+  //       qty: data.rows[0].qty,
+  //       orderdate: data.rows[0].orderdate
+  //     };
+  //     callback(orderData);
+  //     console.log(orderData);
+  //   });
+  // },
+
+  getById: (client, facultyId, callback) => {
+    const listQuery = `
+      SELECT *
+      FROM faculty
+      WHERE id = '${facultyId}'
+    `;
+    client.query(listQuery, (req, data) => {
+      if (data.rowCount) {
+        callback(data.rows[0]);
+      } else {
+        callback();
+      }
     });
   },
+
 getByEmail: (client, email, callback) => {
   const listQuery = `
     SELECT *
@@ -67,6 +83,7 @@ getByEmail: (client, email, callback) => {
     }
   });
 },
+
   list: (client, filter, callback) => {
     // limit, offset, 
     const listQuery = `
