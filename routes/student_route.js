@@ -24,33 +24,33 @@ studentRoute.get('/',
     // });
   });
 
-studentRoute.post('/updatestudent', function (req, res) {
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    if (err) {
-      console.log('error');
-    } else {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        if (err) {
-          console.log('error');
-        } else {
-          Customer.updateProfile(client, {customerId: req.user.id}, {
-            email: req.body.email,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            street: req.body.street,
-            municipality: req.body.municipality,
-            province: req.body.province,
-            zipcode: req.body.zipcode,
-            password: hash,
-            // userrole: 'user'
-          }, function (user) {
-            res.redirect('/home');
-          });
-        };
-      });
-    };
-  });
-});
+// studentRoute.post('/updatestudent', function (req, res) {
+//   bcrypt.genSalt(saltRounds, function (err, salt) {
+//     if (err) {
+//       console.log('error');
+//     } else {
+//       bcrypt.hash(req.body.password, salt, function (err, hash) {
+//         if (err) {
+//           console.log('error');
+//         } else {
+//           Customer.updateProfile(client, {customerId: req.user.id}, {
+//             email: req.body.email,
+//             first_name: req.body.first_name,
+//             last_name: req.body.last_name,
+//             street: req.body.street,
+//             municipality: req.body.municipality,
+//             province: req.body.province,
+//             zipcode: req.body.zipcode,
+//             password: hash,
+//             // userrole: 'user'
+//           }, function (user) {
+//             res.redirect('/home');
+//           });
+//         };
+//       });
+//     };
+//   });
+// });
 
 
 // CLIENT PRODUCT DETAILS

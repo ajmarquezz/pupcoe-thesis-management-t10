@@ -330,6 +330,112 @@ app.get('/forgot', function (req, res) {
 //   });
 // });
 
+//ADMIN INSERT FACULTY
+app.post('/insertfaculty', function (req, res) {
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      console.log('error');
+    } else {
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        if (err) {
+          console.log('error');
+        } else {
+          console.log('signup data', req.body, hash);
+          Faculty.create(client, {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            phone: req.body.phone,
+            password: hash,
+            admin: req.body.admin
+          }, function (faculty) {
+            if (faculty === 'success') {
+              console.log('INSERTED');
+              res.redirect('/admin/faculties');
+            } else if (faculty === 'error') {
+              res.render('partials/admin/error', {
+                msg: 'There was a problem adding a Faculty.',
+                msg2: 'Try Again?',
+                title: 'Error',
+                action: 'adding',
+                page: 'faculty',
+                layout: 'admin',
+                link: '/admin/faculty'
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
+
+//ADMIN INSERT STUDENT
+app.post('/insertstudent', function (req, res) {
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    if (err) {
+      console.log('error');
+    } else {
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        if (err) {
+          console.log('error');
+        } else {
+          console.log('signup data', req.body, hash);
+          Student.create(client, {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            student_number: req.body.student_number,
+            email: req.body.email,
+            phone: req.body.phone,
+            password: hash
+          }, function (student) {
+            if (student === 'success') {
+              console.log('INSERTED');
+              res.redirect('/admin/students');
+            } else if (student === 'error') {
+              res.render('partials/admin/error', {
+                msg: 'There was a problem adding a student.',
+                msg2: 'Try Again?',
+                title: 'Error',
+                action: 'adding',
+                page: 'student',
+                layout: 'admin',
+                link: '/admin/students'
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
+//ADMIN INSERT CLASS
+app.post('/insertclass', function (req, res) {
+  Class.create(client, {
+    batch: req.body.batch,
+    section: req.body.section,
+    adviser: req.body.adviser
+  }, function (classes) {
+    if (classes === 'success') {
+      console.log('INSERTED');
+      res.redirect('/admin/class');
+    } else if (classes === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem adding a class.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'adding',
+        page: 'class',
+        layout: 'admin',
+        link: '/admin/class'
+      });
+    }
+  });
+});
+
+
 //ROUTES
 var adminRoute = require("./routes/admin_route");
 app.use("/admin", adminRoute);

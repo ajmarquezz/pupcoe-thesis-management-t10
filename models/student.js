@@ -74,11 +74,18 @@ getByEmail: (client, email, callback) => {
       student_number, 
       email, 
       phone, 
-      password, 
+      password,
       date_created
     ) 
-    VALUES ($1, $2, $3, $4, $5, $6, current_timestamp)
+    VALUES ($1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    current_timestamp)
     `;
+    console.log(createQuery);
     client.query(createQuery, student)
       .then(res => new callback('success'))
       .catch(e => new callback('error'));

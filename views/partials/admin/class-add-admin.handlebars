@@ -1,51 +1,27 @@
 <br>
 <h1>ADD CLASS</h1>
-<form action="/insertfaculty" id="addproduct-form" method="POST" role="form">
+<form action="/insertclass" method="POST" role="form">
   <fieldset>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label for="name">Batch</label>
-        <input class="form-control" id="name" name="name" type="text" placeholder="First Name" required>
+        <label>Batch</label>
+        <input class="form-control" id="batch" name="batch" type="number" placeholder="Batch" required>
       </div>
       <div class="col">
-        <label for="price">Section</label>
-        <input class="form-control" id="price" name="price" type="text" placeholder="Last Name" required>
+        <label>Section</label>
+        <input class="form-control" id="section" name="section" type="number" placeholder="Section" required>
       </div>
     </div>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">
-        <label for="warranty">Adviser</label>
-        <input class="form-control" id="warranty" name="warranty" type="number" placeholder="Student Number">
+        <label>Adviser</label>
+          <select  name="adviser" class="form-control" id="adviser" required>
+         {{#each faculty}}
+          <option value ="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
+          {{/each}}
+          </select>
       </div>
     </div>
-{{!--     <div class="form-row" style="margin-bottom: 14px;">
-      <div class="col">
-        <label for="warranty">E-mail</label>
-        <input class="form-control" id="warranty" name="warranty" type="email" placeholder="E-mail">
-      </div>
-    </div> --}}
-{{!--     <div class="form-row" style="margin-bottom: 14px;">
-      <div class="col">
-        <label for="warranty">Phone Number</label>
-        <input class="form-control" id="warranty" name="warranty" type="number" placeholder="Phone Number">
-      </div>
-    </div>
-    <div class="form-row" style="margin-bottom: 14px;">
-      <div class="col">
-        <label for="name">Password</label>
-        <input class="form-control" id="tagline" name="tagline" type="password" placeholder="Password"></input>
-      </div>
-      <div class="col">
-        <label for="price">Confirm Password</label>
-        <input class="form-control" id="description" name="description" type="password" placeholder="Confirm Password"></input>
-      </div>
-    </div> --}}
-{{!--     <div class="form-row">
-      <div class="col">
-        <label for="name">Make Admin</label>
-        <input class="form-control" id="image" name="image" type="checkbox"></input>
-      </div>
-    </div> --}}
     <br>
     <div class="row">
       <a class="btn btn-dark col-md-6 back" href="/admin/class">BACK</a>
@@ -53,3 +29,44 @@
   </div>
   </fieldset>
 </form> 
+
+
+
+{{!--           <label>Category</label>
+          <select  name="category" class="form-control" id="category" required>
+         {{#each rows.[1]}}
+          <option value ="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+          </select>
+
+
+          <label>Brand</label>
+          <select name="brand" class="form-control" id="brand" required>
+        {{#each rows.[0]}}
+          <option value ="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+          </select> --}}
+
+
+
+{{!--     app.get('/admin/products', checkAdmin, function (req, res, next) {
+  Category.list(client, {}, function (categories) {
+    Brand.list(client, {}, function (brands) {
+      Product.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
+      }, function (products) {
+        res.render('partials/admin/products-admin', {
+          products: products,
+          layout: 'admin',
+          brands: brands,
+          title: 'Products',
+          categories: categories,
+          pagination: {
+            page: req.query.p || 1,
+            limit: 10,
+            n: req.query.p || 1
+          }
+        });
+      });
+    });
+  });
+}); --}}

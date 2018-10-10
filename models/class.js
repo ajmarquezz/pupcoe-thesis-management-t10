@@ -20,22 +20,38 @@ var Class = {
   },
 
   list: (client, filter, callback) => {
-    const listQuery = `SELECT * FROM class`;
+    const listQuery = `
+    SELECT 
+    class.batch AS batch,
+    class.section AS section,
+    faculty.first_name AS faculty_first_name,
+    faculty.last_name AS faculty_last_name
+    FROM class
+    INNER JOIN faculty ON class.adviser_id=faculty.id
+    `;
     client.query(listQuery, (req, data) => {
       console.log(data.rows);
       callback(data.rows);
     });
   },
 
-  create: (client, brandData, callback) => {
-    var brand = [brandData.brand_name, brandData.brand_desc];
-    const brandInsertQuery = `
-    INSERT INTO brands (name, description)
-    VALUES ($1, $2)
+  create: (client, classData, callback) => {
+    var classes = [
+    classData.batch,
+    classData.section,
+    classData.adviser
+    ];
+    const insertQuery = `
+    INSERT INTO class (
+    batch,
+    section,
+    adviser_id
+    )
+    VALUES ($1, $2, $3)
     `;
-    client.query(brandInsertQuery, brand)
-      .then(res => new callback('SUCCESS'))
-      .catch(e => new callback('ERROR'));
+    client.query(insertQuery, classes)
+      .then(res => new callback('success'))
+      .catch(e => new callback('error'));
   },
 
   update: (client, brandId, brandData, callback) => {

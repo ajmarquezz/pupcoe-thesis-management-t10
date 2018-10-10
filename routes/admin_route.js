@@ -94,45 +94,6 @@ adminRoute.get('/faculties/add_faculty',
       });
   });
 
-adminRoute.post('/insertfaculty', function (req, res) {
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    if (err) {
-      console.log('error');
-    } else {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        if (err) {
-          console.log('error');
-        } else {
-          console.log('signup data', req.body, hash);
-          Faculty.create(client, {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: hash,
-            admin: req.body.admin
-          }, function (faculty) {
-            if (faculty === 'success') {
-              console.log('INSERTED');
-              res.redirect('/admin/faculties');
-            } else if (faculty === 'error') {
-              res.render('partials/admin/error', {
-                msg: 'There was a problem adding a Faculty.',
-                msg2: 'Try Again?',
-                title: 'Error',
-                action: 'adding',
-                page: 'faculty',
-                layout: 'admin',
-                link: '/admin/faculty'
-              });
-            }
-          });
-        }
-      });
-    }
-  });
-});
-
 // // ADMIN EDIT FACULTIES
 // adminRoute.get('/faculty/update/:id',
 //   // checkAdmin,
@@ -193,45 +154,6 @@ adminRoute.get('/students/add_student',
       });
   });
 
-adminRoute.post('/insertstudent', function (req, res) {
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    if (err) {
-      console.log('error');
-    } else {
-      bcrypt.hash(req.body.password, salt, function (err, hash) {
-        if (err) {
-          console.log('error');
-        } else {
-          console.log('signup data', req.body, hash);
-          Student.create(client, {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            student_number: req.body.student_number,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: hash
-          }, function (student) {
-            if (student === 'success') {
-              console.log('INSERTED');
-              res.redirect('/admin/students');
-            } else if (student === 'error') {
-              res.render('partials/admin/error', {
-                msg: 'There was a problem adding a student.',
-                msg2: 'Try Again?',
-                title: 'Error',
-                action: 'adding',
-                page: 'student',
-                layout: 'admin',
-                link: '/admin/students'
-              });
-            }
-          });
-        }
-      });
-    }
-  });
-});
-
 // // ADMIN EDIT STUDENTS
 // adminRoute.get('/student/update/:id',
 //   // checkAdmin,
@@ -272,13 +194,12 @@ adminRoute.post('/insertstudent', function (req, res) {
 adminRoute.get('/class',
   // checkAdmin,
   function (req, res, next) {
-  // Category.list(client, {}, function (categories) {
-  //   Brand.list(client, {}, function (brands) {
-  //     Product.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
-  //     }, function (products) {
+  Class.list(client, {}, function (classes) {
+    Faculty.list(client, {}, function (faculty) {
     res.render('partials/admin/class-admin', {
       layout: 'admin',
-      title: 'Products'
+      title: 'Classes',
+      classes:classes
       // ,
       // products: products,
       // brands: brands,
@@ -289,8 +210,8 @@ adminRoute.get('/class',
       //   n: req.query.p || 1
       // }
     });
-  //     });
-  //   });
+      });
+    });
   // });
   });
 
@@ -298,43 +219,14 @@ adminRoute.get('/class',
 adminRoute.get('/class/add_class',
   // checkAdmin,
   function (req, res) {
-    // Category.list(client, {}, function (categories) {
+    Faculty.list(client, {}, function (faculty) {
       res.render('partials/admin/class-add-admin', {
-        // categories: categories,
+        faculty: faculty,
         layout: 'admin',
-        title: 'Categories'
+        title: 'Add Class'
       });
-    // });
+    });
   });
-
-adminRoute.post('/insertclass', function (req, res) {
-  Product.create(client, {
-    product_name: req.body.name,
-    product_desc: req.body.description,
-    product_tagline: req.body.tagline,
-    product_price: req.body.price,
-    product_warranty: req.body.warrranty,
-    product_category: req.body.category,
-    product_brand: req.body.brand,
-    product_image: req.body.image
-  }, function (products) {
-    if (products === 'success') {
-      res.redirect('/admin/class');
-      console.log('insert success');
-    } else if (products === 'error') {
-      console.log('error');
-      res.render('partials/admin/error', {
-        msg: 'There was a problem creating the product.',
-        msg2: 'Try Again?',
-        title: 'Error',
-        action: 'creating',
-        page: 'product',
-        layout: 'admin',
-        link: '/admin/products'
-      });
-    }
-  });
-});
 
 // // ADMIN CLASS UPDATE
 // adminRoute.get('/class/update/:id',

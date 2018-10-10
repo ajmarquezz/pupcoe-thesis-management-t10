@@ -85,13 +85,13 @@ body {
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-        {{#each faculty}}
+        {{#each classes}}
         <tr>
-          <td>{{this.first}} {{this.last}}</td>
-          <td>{{this.productsname}}</td>
-          <td>{{this.qty}}</td>
-          <td>{{this.productsname}}</td>
-          <td>{{moment this.orderdate "lll"}}</td>
+          <td>{{this.id}}</td>
+          <td>{{this.batch}}</td>
+          <td>{{this.section}}</td>
+          <td>{{this.faculty_first_name}} {{this.faculty_last_name}}</td>
+          <td>//link to details//</td>
         </tr>
         {{/each}}
       </tbody>

@@ -77,6 +77,8 @@ body {
           <th>Name</th>
           <th>E-mail</th>
           <th>Phone</th>
+          <th>Group</th>
+          <th>Class</th>
           <th>View Profile</th>
         </tr>
       </thead>
@@ -85,13 +87,15 @@ body {
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-        {{#each faculty}}
+        {{#each student}}
         <tr>
-          <td>{{this.first}} {{this.last}}</td>
-          <td>{{this.productsname}}</td>
-          <td>{{this.qty}}</td>
-          <td>{{this.productsname}}</td>
-          <td>{{moment this.orderdate "lll"}}</td>
+          <td>{{this.student_number}}</td>
+          <td>{{this.first_name}} {{this.last_name}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.phone}}</td>
+          <td>//group//</td>
+          <td>//class//</td>
+          <td>//link to student profile//</td>
         </tr>
         {{/each}}
       </tbody>
