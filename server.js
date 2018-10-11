@@ -59,8 +59,9 @@ types.setTypeParser(1114, function (stringValue) {
 // Configure the local strategy for use by Passport.
 passport.use(new Strategy({
   usernameField: 'email',
-  passwordField: 'password',
-  passReqToCallback: true
+  passwordField: 'password'
+  // ,
+  // passReqToCallback: true
 },
 function (email, password, cb) {
   Faculty.getByEmail(client, email, function (user) {
@@ -386,6 +387,7 @@ app.post('/insertstudent', function (req, res) {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             student_number: req.body.student_number,
+            class_id: req.body.class,
             email: req.body.email,
             phone: req.body.phone,
             password: hash

@@ -17,6 +17,15 @@
         <label>Student Number</label>
         <input class="form-control" id="student_number" name="student_number" type="text" placeholder="Student Number" required>
       </div>
+
+      <div class="col">
+        <label>Class</label>
+          <select  name="class" class="form-control" id="class" required>
+         {{#each classes}}
+          <option value ="{{this.id}}">Batch {{this.batch}} Section {{this.section}}</option>
+          {{/each}}
+          </select>
+      </div>
     </div>
     <div class="form-row" style="margin-bottom: 14px;">
       <div class="col">

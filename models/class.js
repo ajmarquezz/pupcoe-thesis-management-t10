@@ -21,7 +21,8 @@ var Class = {
 
   list: (client, filter, callback) => {
     const listQuery = `
-    SELECT 
+    SELECT
+    class.id AS id,
     class.batch AS batch,
     class.section AS section,
     faculty.first_name AS faculty_first_name,

@@ -87,17 +87,19 @@ body {
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
-        {{#each student}}
         <tr>
+        {{#each student}}
           <td>{{this.student_number}}</td>
           <td>{{this.first_name}} {{this.last_name}}</td>
           <td>{{this.email}}</td>
           <td>{{this.phone}}</td>
+        {{/each}}
           <td>//group//</td>
-          <td>//class//</td>
+          {{#each classes}}
+          <td>Batch {{this.batch}} Section {{this.section}}</td>
+          {{/each}}
           <td>//link to student profile//</td>
         </tr>
-        {{/each}}
       </tbody>
     </table>
   </div>

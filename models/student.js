@@ -46,14 +46,44 @@ getByEmail: (client, email, callback) => {
   list: (client, filter, callback) => {
     // limit, offset, 
     const listQuery = `
-    SELECT *
+    SELECT
+    students.id AS id,
+    students.first_name AS first_name,
+    students.last_name AS last_name,
+    students.email AS email,
+    students.phone AS phone,
+    students.student_number AS student_number,
+    class.batch AS batch,
+    class.section AS section,
+    class.adviser_id AS adviser_id,
+    faculty.first_name AS faculty_first_name,
+    faculty.last_name AS faculty_last_name
+    FROM students
+    INNER JOIN class on students.class_id=class.id
+    INNER JOIN faculty ON class.adviser_id=faculty.id
     FROM students
     `;
     // LIMIT '${limit.limit}' OFFSET '${offset.offset}'
 
     client.query(listQuery, (req, data) => {
+      var productData = {
+        id: data.rows[0].id,
+        name: data.rows[0].productsname,
+        description: data.rows[0].productsdesc,
+        tagline: data.rows[0].tagline,
+        price: data.rows[0].productsprice,
+        warranty: data.rows[0].warranty,
+        img: data.rows[0].productspic,
+        brandname: data.rows[0].productsbrand,
+        branddesc: data.rows[0].branddesc,
+        category: data.rows[0].categoryname,
+        title: 'Details'
+      };
+      callback(productData);
+      console.log(productData);
+    });
       console.log(data.rows);
-      callback(data.rows);
+      callback(data.rows);f
     });
   },
 
@@ -62,6 +92,7 @@ getByEmail: (client, email, callback) => {
       studentData.first_name,
       studentData.last_name,
       studentData.student_number,
+      studentData.class_id,
       studentData.email,
       studentData.phone,
       studentData.password
@@ -69,20 +100,22 @@ getByEmail: (client, email, callback) => {
 
     const createQuery = `
     INSERT INTO students (
-      first_name, 
-      last_name, 
-      student_number, 
-      email, 
-      phone, 
+      first_name,
+      last_name,
+      student_number,
+      class_id,
+      email,
+      phone,
       password,
       date_created
-    ) 
+    )
     VALUES ($1,
     $2,
     $3,
     $4,
     $5,
     $6,
+    $7,
     current_timestamp)
     `;
     console.log(createQuery);

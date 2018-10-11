@@ -148,10 +148,13 @@ adminRoute.get('/students',
 adminRoute.get('/students/add_student',
   // checkAdmin,
   function (req, res) {
+           Class.list(client, {}, function (classes) {
       res.render('partials/admin/students-add-admin', {
+        classes: classes,
         layout: 'admin',
         title: 'Add Student'
       });
+       });
   });
 
 // // ADMIN EDIT STUDENTS
@@ -196,6 +199,7 @@ adminRoute.get('/class',
   function (req, res, next) {
   Class.list(client, {}, function (classes) {
     Faculty.list(client, {}, function (faculty) {
+      console.log(classes);
     res.render('partials/admin/class-admin', {
       layout: 'admin',
       title: 'Classes',
