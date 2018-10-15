@@ -21,7 +21,6 @@
     "nodemailer-express-handlebars": "^3.0.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "pg": "^7.4.3",
     "sendmail": "^1.4.1"
   },
   "devDependencies": {},
@@ -29,18 +28,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [
-    "module",
-    "ecommerce"
-  ],
-  "author": "navarro marquez",
-  "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajmarquezz/dbms1819-ecommerce-t10.git"
+    "url": "git+https://github.com/ajmarquezz/pupcoe-thesis-management-t10.git"
   },
+  "author": "",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ajmarquezz/dbms1819-ecommerce-t10/issues"
+    "url": "https://github.com/ajmarquezz/pupcoe-thesis-management-t10/issues"
   },
-  "homepage": "https://github.com/ajmarquezz/dbms1819-ecommerce-t10#readme"
+  "homepage": "https://github.com/ajmarquezz/pupcoe-thesis-management-t10#readme"
 }
