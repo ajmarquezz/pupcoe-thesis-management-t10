@@ -11,9 +11,9 @@ facultyRoute.get('/',
   function (req, res, next) {
     // Product.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
     // }, function (products) {
-      res.render('partials/faculty/products', {
+      res.render('partials/faculty/class', {
         // products: products,
-        title: 'Products',
+        title: 'Faculty',
         layout: 'faculty'
         // ,
         // pagination: {

@@ -77,31 +77,29 @@ body {
           <th>Name</th>
           <th>E-mail</th>
           <th>Phone</th>
-          <th>Group</th>
-          <th>Class</th>
+{{!--           <th>Group</th>
+          <th>Class</th> --}}
           <th>View Profile</th>
         </tr>
       </thead>
     </table>
   </div> 
   <div class="tbl-content">
+        {{#each user}}
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
         <tr>
-        {{#each student}}
           <td>{{this.student_number}}</td>
           <td>{{this.first_name}} {{this.last_name}}</td>
           <td>{{this.email}}</td>
           <td>{{this.phone}}</td>
-        {{/each}}
-          <td>//group//</td>
-          {{#each classes}}
-          <td>Batch {{this.batch}} Section {{this.section}}</td>
-          {{/each}}
+{{!--           <td>//group//</td>
+          <td>Batch {{this.batch}} Section {{this.section}}</td> --}}
           <td>//link to student profile//</td>
         </tr>
       </tbody>
     </table>
+        {{/each}}
   </div>
   <br>
       <a class="btn btn-dark col-md-12 back" href="/admin/students/add_student">ADD STUDENT</a>

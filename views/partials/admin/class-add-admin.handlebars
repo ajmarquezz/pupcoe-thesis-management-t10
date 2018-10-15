@@ -16,7 +16,7 @@
       <div class="col">
         <label>Adviser</label>
           <select  name="adviser" class="form-control" id="adviser" required>
-         {{#each faculty}}
+         {{#each user}}
           <option value ="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
           {{/each}}
           </select>

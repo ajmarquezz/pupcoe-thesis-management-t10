@@ -1,46 +1,45 @@
 module.exports = (function() {
   'use strict';
 
-const { Client } = require('pg');
-// const bcrypt = require('bcrypt');
-var bcrypt = require('bcryptjs');
-const saltRounds = 10;
-const Faculty = require('../models/faculty.js');
-const Class = require('../models/class.js');
-const Student = require('../models/student.js');
+  const express = require('express');
+  const path = require('path');
+  var types = require('pg').types;
+  const bcrypt = require('bcrypt');
+  const { Client } = require('pg');
+  const saltRounds = 10;
 
-var adminRoute = require ('express').Router();
+  const User = require('../models/user.js');
+  const Class = require('../models/class.js');
 
-const client = new Client({
-  database: 'd2e89uf6dlr7q5',
-  user: 'melgulxabeyzzp',
-  password: 'e6d2c7d6c1922a4e41a4acb2a52352dcf75ff97d6c2a7333fdef28047bd6b235',
-  host: 'ec2-184-73-197-211.compute-1.amazonaws.com',
-  port: 5432,
-  ssl: true
-});
+  var adminRoute = require ('express').Router();
 
-client.connect()
-  .then(function () {
-    console.log('Connected to Database!');
-  })
-  .catch(function () {
-    console.log('Error Connecting to Database');
+  const client = new Client({
+    database: 'd2e89uf6dlr7q5',
+    user: 'melgulxabeyzzp',
+    password: 'e6d2c7d6c1922a4e41a4acb2a52352dcf75ff97d6c2a7333fdef28047bd6b235',
+    host: 'ec2-184-73-197-211.compute-1.amazonaws.com',
+    port: 5432,
+    ssl: true
   });
 
+  client.connect()
+  .then(function () {
+  })
+  .catch(function () {
+  });
 
 // ADMIN PROFILE
 adminRoute.get('/',
-  // checkAdmin,
-  function (req, res) {
-  // Customer.getCustomer(client, {customerId: req.user.id}, function (user) {
-    res.render('partials/admin/profile-admin', {
-      // user: user,
-      layout: 'admin',
-      title: 'Welcome'
-    });
-  // });
-});
+  function (req, res, next) {
+    if (req.isAuthenticated() && req.user.is_admin) {
+      res.render('partials/admin/profile-admin', {
+        layout: 'admin',
+        title: 'Welcome'
+      })
+    } else {
+      res.redirect('/')
+    }
+  });
 
 adminRoute.post('/updateadminprofile', function (req, res) {
   bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -60,7 +59,6 @@ adminRoute.post('/updateadminprofile', function (req, res) {
             province: req.body.province,
             zipcode: req.body.zipcode,
             password: hash,
-            // userrole: 'user'
           }, function (user) {
             res.redirect('/home');
           });
@@ -73,201 +71,127 @@ adminRoute.post('/updateadminprofile', function (req, res) {
 
 // ADMIN FACULTIES LIST
 adminRoute.get('/faculties',
-  // checkAdmin,
   function (req, res) {
-    Faculty.list(client, {}, function (faculty) {
-      res.render('partials/admin/faculties-admin', {
-        faculty: faculty,
-        layout: 'admin',
-        title: 'Faculty'
+    if (req.isAuthenticated() && req.user.is_admin) {
+      User.list(client, 'faculty', function (faculty) {
+        res.render('partials/admin/faculties-admin', {
+          faculty: faculty,
+          layout: 'admin',
+          title: 'Faculty'
+        })
       });
-    });
+    } else {
+      res.redirect('/')
+    }
   });
 
 // ADMIN ADD FACULTIES
 adminRoute.get('/faculties/add_faculty',
-  // checkAdmin,
   function (req, res) {
+    if (req.isAuthenticated() && req.user.is_admin) {
       res.render('partials/admin/faculties-add-admin', {
         layout: 'admin',
         title: 'Add Faculty'
       });
+    } else {
+      res.redirect('/')
+    }
   });
-
-// // ADMIN EDIT FACULTIES
-// adminRoute.get('/faculty/update/:id',
-//   // checkAdmin,
-//   function (req, res) {
-//     // Category.getById(client, req.params.id, function (categoryData) {
-//       res.render('partials/admin/faculties-update-admin', {
-//         // category: categoryData,
-//         title: 'Category',
-//         layout: 'admin'
-//       });
-//     // });
-//   });
-
-// adminRoute.post('/edit-faculty/:id',
-//   // checkAdmin,
-//   function (req, res) {
-//     Category.update(client, {categoryId: req.params.id}, {
-//       category_name: req.body.name
-//     }, function (category) {
-//       if (category === 'success') {
-//         res.redirect('/admin/categories');
-//       } else if (category === 'error') {
-//         res.render('partials/admin/error', {
-//           msg: 'There was a problem updating the Category.',
-//           msg2: 'Try Again?',
-//           title: 'Error',
-//           page: 'category',
-//           action: 'updating',
-//           layout: 'admin',
-//           link: '/admin/categories'
-//         });
-//       }
-//     });
-//   });
-
-
 
 // ADMIN STUDENTS LIST
 adminRoute.get('/students',
-  // checkAdmin,
   function (req, res) {
-    Student.list(client, {}, function (student) {
-      res.render('partials/admin/students-admin', {
-        student: student,
-        layout: 'admin',
-        title: 'Students'
+    if (req.isAuthenticated() && req.user.is_admin) {
+      User.list(client, 'student', function (user) {
+        res.render('partials/admin/students-admin', {
+          user: user,
+          layout: 'admin',
+          title: 'Students'
+        });
       });
-    });
+    } else {
+      res.redirect('/')
+    };
   });
+
 
 // ADMIN ADD STUDENTS
 adminRoute.get('/students/add_student',
-  // checkAdmin,
   function (req, res) {
-           Class.list(client, {}, function (classes) {
+    if (req.isAuthenticated() && req.user.is_admin) {
       res.render('partials/admin/students-add-admin', {
-        classes: classes,
         layout: 'admin',
         title: 'Add Student'
       });
-       });
+    } else {
+      res.redirect('/')
+    }
   });
-
-// // ADMIN EDIT STUDENTS
-// adminRoute.get('/student/update/:id',
-//   // checkAdmin,
-//   function (req, res) {
-//     // Brand.getById(client, req.params.id, function (brandData) {
-//       res.render('partials/admin/students-update-admin', {
-//         // brands: brandData,
-//         title: 'Brand',
-//         layout: 'admin'
-//       });
-//     // });
-//   });
-
-// adminRoute.post('/edit-student/:id', function (req, res) {
-//   Brand.update(client, {brandId: req.params.id}, {
-//     brand_name: req.body.name,
-//     brand_desc: req.body.description
-//   }, function (brand) {
-//     if (brand === 'success') {
-//       res.redirect('/admin/students');
-//     } else if (brand === 'error') {
-//       res.render('partials/admin/error', {
-//         msg: 'There was a problem Updating the Brand.',
-//         msg2: 'Try Again?',
-//         title: 'Error',
-//         action: 'updating',
-//         page: 'category',
-//         layout: 'admin',
-//         link: '/admin/brands'
-//       });
-//     }
-//   });
-// });
-
-
 
 // ADMIN CLASS LIST
 adminRoute.get('/class',
-  // checkAdmin,
   function (req, res, next) {
-  Class.list(client, {}, function (classes) {
-    Faculty.list(client, {}, function (faculty) {
-      console.log(classes);
-    res.render('partials/admin/class-admin', {
-      layout: 'admin',
-      title: 'Classes',
-      classes:classes
-      // ,
-      // products: products,
-      // brands: brands,
-      // categories: categories,
-      // pagination: {
-      //   page: req.query.p || 1,
-      //   limit: 10,
-      //   n: req.query.p || 1
-      // }
-    });
+    if (req.isAuthenticated() && req.user.is_admin) {
+      Class.list(client, {}, function (classes) {
+
+        res.render('partials/admin/class-admin', {
+          layout: 'admin',
+          title: 'Classes',
+          classes: classes
+        });
       });
-    });
-  // });
+
+    } else {
+      res.redirect('/')
+    }
   });
 
 // ADMIN ADD CLASS
 adminRoute.get('/class/add_class',
-  // checkAdmin,
   function (req, res) {
-    Faculty.list(client, {}, function (faculty) {
-      res.render('partials/admin/class-add-admin', {
-        faculty: faculty,
-        layout: 'admin',
-        title: 'Add Class'
+    if (req.isAuthenticated() && req.user.is_admin) {
+      User.list(client, 'faculty', function (user) {
+        res.render('partials/admin/class-add-admin', {
+          user: user,
+          layout: 'admin',
+          title: 'Add Class'
+        });
       });
-    });
+    } else {
+      res.redirect('/')
+    }
   });
 
-// // ADMIN CLASS UPDATE
-// adminRoute.get('/class/update/:id',
-//   // checkAdmin,
-//   function (req, res) {
-//     Category.list(client, {}, function (categories) {
-//       Brand.list(client, {}, function (brands) {
-//         Product.getById(client, req.params.id, function (productData) {
-//           res.render('partials/admin/class-update-admin', {
-//             products: productData,
-//             layout: 'admin',
-//             brands: brands,
-//             title: 'Products',
-//             categories: categories
-//           });
-//         });
-//       });
-//     });
-//   });
 
-// adminRoute.post('/edit-products/:id', function (req, res) {
-//   client.query("UPDATE products SET name = '" + req.body.name + "', description = '" + req.body.description + "', price = '" + req.body.price + "', tagline = '" + req.body.tagline + "', warranty = '" + req.body.warranty + "',category_id = '" + req.body.category + "', brand_id = '" + req.body.brand + "', pic = '" + req.body.image + "'WHERE id = '" + req.params.id + "' ;");
-//   res.redirect('/admin/products');
-// });
-
+adminRoute.get('/class/:id',
+  function (req, res) {
+    if (req.isAuthenticated() && req.user.is_admin) {
+      Class.getById(client, req.params.id, function (classData) {
+        User.noClassList(client, 'student', function (user) {
+            res.render('partials/admin/class-list-admin', {
+              classes: classData,
+              user: user,
+              layout: 'admin',
+              title: 'Add Class'
+            });
+          });
+        });
+    } else {
+      res.redirect('/')
+    }
+  });
 
 // ADMIN GUEST LIST
 adminRoute.get('/guests',
-  // checkAdmin,
   function (req, res) {
-    // Category.list(client, {}, function (categories) {
+    if (req.isAuthenticated() && req.user.is_admin) {
       res.render('partials/admin/guests-admin', {
-        // categories: categories,
         layout: 'admin',
         title: 'Categories'
       });
-    // });
+    } else {
+      res.redirect('/')
+    }
   });
 
 // ADMIN ADD GUEST
@@ -291,41 +215,6 @@ adminRoute.post('/insertguest', function (req, res) {
     }
   });
 });
-
-// // ADMIN EDIT GUEST
-// adminRoute.get('/guest/update/:id',
-//   // checkAdmin,
-//   function (req, res) {
-//     // Category.getById(client, req.params.id, function (categoryData) {
-//       res.render('partials/admin/guests-update-admin', {
-//         // category: categoryData,
-//         title: 'Category',
-//         layout: 'admin'
-//       });
-//     // });
-//   });
-
-// adminRoute.post('/edit-guest/:id',
-//   // checkAdmin,
-//   function (req, res) {
-//     Category.update(client, {categoryId: req.params.id}, {
-//       category_name: req.body.name
-//     }, function (category) {
-//       if (category === 'success') {
-//         res.redirect('/admin/guests');
-//       } else if (category === 'error') {
-//         res.render('partials/admin/error', {
-//           msg: 'There was a problem updating the Category.',
-//           msg2: 'Try Again?',
-//           title: 'Error',
-//           page: 'category',
-//           action: 'updating',
-//           layout: 'admin',
-//           link: '/admin/guests'
-//         });
-//       }
-//     });
-//   });
 
 return adminRoute;
 })();
