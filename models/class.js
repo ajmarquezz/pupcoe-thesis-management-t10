@@ -28,6 +28,34 @@ var Class = {
     });
   },
 
+  listByFacultyId: (client, facultyId, callback) => {
+    const query = `
+      SELECT
+        id,
+        batch,
+        section
+      FROM classes 
+      WHERE adviser=${facultyId}
+    `;
+        client.query(query, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
+
+  getStudentsByClassId: (client, classId, callback) => {
+    const query = `
+      SELECT *
+      FROM "classStudents" c
+      INNER JOIN users u on c.student_id = u.id
+      WHERE c.class_id = ${classId}
+    `;
+        client.query(query, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
+
   list: (client, filter, callback) => {
     const listQuery = `
     SELECT
@@ -66,20 +94,44 @@ var Class = {
       .catch(e => new callback('error'));
   },
 
-
-  update: (client, brandId, brandData, callback) => {
-    var brand = [brandData.brand_name, brandData.brand_desc];
-    const updateQuery = `
-    UPDATE brands
-    SET name = $1, description = $2
-    WHERE id = '${brandId.brandId}'
+  getByStudentId: (client, studentId, callback) => {
+    const query = `
+      SELECT 
+        cl.batch,
+        cl.section,
+        u.first_name ,
+        u.last_name,
+        u.email,
+        us.first_name as adviser_fname,
+        us.last_name as adviser_lname,
+        us.email as adviser_email
+      FROM "classStudents" c
+      INNER JOIN classes cl on c.class_id = cl.id
+      INNER JOIN users u on c.student_id = u.id
+      INNER JOIN users us on cl.adviser = us.id
+      WHERE c.student_id = ${studentId}
     `;
-
-    client.query(updateQuery, brand)
+    client.query(query, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
+  addStudents: (client, data, callback) => {
+      var query = `
+        INSERT INTO "classStudents" (
+        class_id,
+        student_id
+        )
+        VALUES (
+        '${data.class}',
+        '${data.student}'
+        )
+        RETURNING *
+      `;
+          client.query(query)
       .then(res => new callback('success'))
       .catch(e => new callback('error'));
-
-    console.log(updateQuery);
+      console.log(query);
   }
 };
 
@@ -148,24 +200,24 @@ module.exports = Class;
 //     });
 //     return promise;
 //   },
-//   getStudentsByClassId: (classId) => {
-//     const query = `
-//       SELECT *
-//       FROM "classStudents" c
-//       INNER JOIN users u on c.student_id = u.id
-//       WHERE c.class_id = ${classId}
-//     `;
-//     var promise = new Promise((resolve, reject) => {
-//       db.query(query, (req, data) => {
-//         if (data && data.rowCount) {
-//           resolve(data.rows);
-//         } else {
-//           resolve([]);
-//         }
-//       });
-//     });
-//     return promise;
-//   },
+  // getStudentsByClassId: (classId) => {
+  //   const query = `
+  //     SELECT *
+  //     FROM "classStudents" c
+  //     INNER JOIN users u on c.student_id = u.id
+  //     WHERE c.class_id = ${classId}
+  //   `;
+  //   var promise = new Promise((resolve, reject) => {
+  //     db.query(query, (req, data) => {
+  //       if (data && data.rowCount) {
+  //         resolve(data.rows);
+  //       } else {
+  //         resolve([]);
+  //       }
+  //     });
+  //   });
+  //   return promise;
+  // },
   // list: (filter) => {
   //   const query = `
   //     SELECT
@@ -189,28 +241,28 @@ module.exports = Class;
   //   });
   //   return promise;
   // },
-//   listByFacultyId: (facultyId) => {
-//     const query = `
-//       SELECT
-//         id,
-//         batch,
-//         section
-//       FROM classes 
-//       WHERE adviser=${facultyId}
-//     `;
-//     var promise = new Promise((resolve, reject) => {
-//       console.log('query', query)
-//       db.query(query, (req, data) => {
-//         console.log('req', req)
-//         if (data && data.rowCount) {
-//           resolve(data.rows);
-//         } else {
-//           resolve([]);
-//         }
-//       });
-//     });
-//     return promise;
-//   },
+  // listByFacultyId: (facultyId) => {
+  //   const query = `
+  //     SELECT
+  //       id,
+  //       batch,
+  //       section
+  //     FROM classes 
+  //     WHERE adviser=${facultyId}
+  //   `;
+  //   var promise = new Promise((resolve, reject) => {
+  //     console.log('query', query)
+  //     db.query(query, (req, data) => {
+  //       console.log('req', req)
+  //       if (data && data.rowCount) {
+  //         resolve(data.rows);
+  //       } else {
+  //         resolve([]);
+  //       }
+  //     });
+  //   });
+  //   return promise;
+  // },
   // create: (data) => {
   //   // check first if user with given email already exists
   //   const promise = new Promise((resolve, reject) => {

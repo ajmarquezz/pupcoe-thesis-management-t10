@@ -167,14 +167,18 @@ adminRoute.get('/class/:id',
   function (req, res) {
     if (req.isAuthenticated() && req.user.is_admin) {
       Class.getById(client, req.params.id, function (classData) {
+        Class.getStudentsByClassId(client, req.params.id, function (classStudents) {
+        console.log('CLASS STUDENTS', classStudents);
         User.noClassList(client, 'student', function (user) {
             res.render('partials/admin/class-list-admin', {
               classes: classData,
+              classStudents: classStudents,
               user: user,
               layout: 'admin',
               title: 'Add Class'
             });
           });
+        });
         });
     } else {
       res.redirect('/')

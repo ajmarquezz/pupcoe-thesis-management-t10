@@ -211,6 +211,30 @@ app.post('/insertclass', function (req, res) {
   });
 });
 
+
+//ADMIN INSERT STUDENT IN CLASS
+app.post('/add_student/:id', function (req, res) {
+  Class.addStudents(client, {
+class: req.params.id,
+student: req.body.studentlist
+  }, function (classes) {
+    if (classes === 'success') {
+      console.log('INSERTED');
+      res.redirect('/admin/class/:id');
+    } else if (classes === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem adding a class.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'adding',
+        page: 'class',
+        layout: 'admin',
+        link: '/admin/class'
+      });
+    }
+  });
+});
+
 //ROUTES
 app.use("/admin", adminRoute);
 app.use("/faculty", facultyRoute);

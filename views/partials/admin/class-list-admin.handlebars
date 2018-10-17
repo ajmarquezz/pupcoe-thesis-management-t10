@@ -22,7 +22,7 @@
   <tbody>
     {{#each classStudents}}
     <tr>
-      <th scope="row">{{this.student_number}}</th>
+      <th>{{this.student_number}}</th>
       <td>{{this.first_name}} {{this.last_name}}</td>
       <td>{{this.email}}</td>
       <td>{{this.phone}}</td>
@@ -43,11 +43,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="/add_student/{{classes.id}}" method="POST" role="form">
       <div class="modal-body">
-          <select multiple id="student-list" data-class-id="{{classData.id}}">
+          <select id="studentlist" name="studentlist" class="form-control">
               {{#each user}}
                 <option value='{{this.id}}'>
-                  <div><em>{{this.first_name}} {{this.last_name}}</em></div>
+                  <div><em>{{this.id}} {{this.first_name}} {{this.last_name}}</em></div>
                   <div>{{this.email}}</div>
                 </option>
               {{/each}}
@@ -55,8 +56,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="save-class-students">Save changes</button>
+        <input class="btn btn-primary" type="submit" value="SAVE CHANGES"></input>
       </div>
+    </form>
     </div>
   </div>
 </div>

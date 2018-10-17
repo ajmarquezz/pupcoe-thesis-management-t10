@@ -1,96 +1,41 @@
 module.exports = (function() {
   'use strict';
+  const { Client } = require('pg');
+  const User = require('../models/user.js');
+  const Class = require('../models/class.js');
 
   var studentRoute = require ('express').Router();
 
+  const client = new Client({
+    database: 'd2e89uf6dlr7q5',
+    user: 'melgulxabeyzzp',
+    password: 'e6d2c7d6c1922a4e41a4acb2a52352dcf75ff97d6c2a7333fdef28047bd6b235',
+    host: 'ec2-184-73-197-211.compute-1.amazonaws.com',
+    port: 5432,
+    ssl: true
+  });
 
-// CLIENT PRODUCTS LIST IF LOGGED
+  client.connect()
+  .then(function () {
+  })
+  .catch(function () {
+  });
+
+//STUDENT PROFILE
 studentRoute.get('/',
-  // checkAuthentication,
   function (req, res, next) {
-    // Product.list(client, {limit: 10}, {offset: (req.query.p - 1) * 10}, {
-    // }, function (products) {
+  if (req.isAuthenticated() && req.user.user_type == 'student') {
+    Class.getByStudentId(client, req.user.id, function(data) {
       res.render('partials/student/profile', {
-        // products: products,
-        title: 'Products',
+        data: data,
+        title: 'Profile',
         layout: 'student'
-        // ,
-        // pagination: {
-        //   page: req.query.p || 1,
-        //   limit: 10,
-        //   n: req.query.p || 1
-        // }
       });
-    // });
+          });
+  } else {
+    res.redirect('/')
+  }
   });
-
-// studentRoute.post('/updatestudent', function (req, res) {
-//   bcrypt.genSalt(saltRounds, function (err, salt) {
-//     if (err) {
-//       console.log('error');
-//     } else {
-//       bcrypt.hash(req.body.password, salt, function (err, hash) {
-//         if (err) {
-//           console.log('error');
-//         } else {
-//           Customer.updateProfile(client, {customerId: req.user.id}, {
-//             email: req.body.email,
-//             first_name: req.body.first_name,
-//             last_name: req.body.last_name,
-//             street: req.body.street,
-//             municipality: req.body.municipality,
-//             province: req.body.province,
-//             zipcode: req.body.zipcode,
-//             password: hash,
-//             // userrole: 'user'
-//           }, function (user) {
-//             res.redirect('/home');
-//           });
-//         };
-//       });
-//     };
-//   });
-// });
-
-
-// CLIENT PRODUCT DETAILS
-studentRoute.get('/details/:id',
-  // checkAuthentication,
-  (req, res) => {
-    Product.getByIdLogged(client, req.params.id, function (productData) {
-      res.render('partials/student/details', productData);
-    });
-  });
-
-
-// CLIENT BRANDS LIST IF LOGGED
-studentRoute.get('/brands',
-  // checkAuthentication,
-  function (req, res) {
-    Brand.list(client, {}, function (brands) {
-      res.render('partials/student/brands', {
-        brands: brands,
-        layout: 'student',
-        title: 'Brands'
-      });
-    });
-  });
-
-
-
-// CLIENT CATEGORIES LIST IF LOGGED
-studentRoute.get('/categories',
-  // checkAuthentication,
-  function (req, res) {
-    Category.list(client, {}, function (categories) {
-      res.render('partials/student/categories', {
-        categories: categories,
-        layout: 'student',
-        title: 'Categories'
-      });
-    });
-  });
-
 
 
 
