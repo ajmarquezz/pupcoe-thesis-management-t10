@@ -98,11 +98,26 @@ adminRoute.get('/faculties/add_faculty',
     }
   });
 
+adminRoute.get('/committee',
+  function (req, res) {
+    if (req.isAuthenticated() && req.user.is_admin) {
+      User.list(client, 'faculty', function (faculty) {
+        res.render('partials/admin/faculties-admin', {
+          faculty: faculty,
+          layout: 'admin',
+          title: 'Faculty'
+        })
+      });
+    } else {
+      res.redirect('/')
+    }
+  });
+
 // ADMIN STUDENTS LIST
 adminRoute.get('/students',
   function (req, res) {
     if (req.isAuthenticated() && req.user.is_admin) {
-      User.list(client, 'student', function (user) {
+      User.listCommittee(client, 'student', function (user) {
         res.render('partials/admin/students-admin', {
           user: user,
           layout: 'admin',
@@ -133,7 +148,6 @@ adminRoute.get('/class',
   function (req, res, next) {
     if (req.isAuthenticated() && req.user.is_admin) {
       Class.list(client, {}, function (classes) {
-
         res.render('partials/admin/class-admin', {
           layout: 'admin',
           title: 'Classes',
