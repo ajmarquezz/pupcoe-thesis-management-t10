@@ -3,7 +3,9 @@ module.exports = (function() {
   const { Client } = require('pg');
   const User = require('../models/user.js');
   const Class = require('../models/class.js');
-
+  const Committee = require('../models/committee.js');
+  const Group = require('../models/group.js');
+  
   var facultyRoute = require ('express').Router();
 
   const client = new Client({
@@ -57,46 +59,69 @@ facultyRoute.get('/class/:id',
   });
 
 
+
+
+
+
+
+// FACULTY GROUP LIST
+facultyRoute.get('/group',
+  function (req, res, next) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty') {
+      Group.list(client, {}, function (groups) {
+        console.log(groups);
+        res.render('partials/faculty/groups', {
+          layout: 'faculty',
+          title: 'Groups',
+          groups: groups
+        });
+      });
+
+    } else {
+      res.redirect('/')
+    }
+  });
+
+//FACULTY ADD GROUP
+facultyRoute.get('/group/add_group',
+  function (req, res) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty') {
+      Class.list(client, 'faculty', function (classes) {
+        res.render('partials/faculty/group-add', {
+          classes: classes,
+          layout: 'faculty',
+          title: 'Add Group'
+        });
+      });
+    } else {
+      res.redirect('/')
+    }
+  });
+
+
+facultyRoute.get('/group/:id',
+  function (req, res) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty') {
+      Group.getById(client, req.params.id, function (groupData) {
+        Group.getStudentsByGroupId(client, req.params.id, function (classStudents) {
+        console.log('GROUP NAME', groupData);
+        Group.noGroupList(client, 'student', function (user) {
+            res.render('partials/faculty/group-list', {
+              groups: groupData,
+              classStudents: classStudents,
+              user: user,
+              layout: 'faculty',
+              title: 'Add Group'
+            });
+          });
+        });
+        });
+    } else {
+      res.redirect('/')
+    }
+  });
+
+
 return facultyRoute;
 })();
-
-
-
-
-//sir tria
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   if (req.isAuthenticated() && req.user.user_type == 'faculty') {
-//     res.render('faculty/home', { layout: 'faculty' });
-//   } else {
-//     res.redirect('/')
-//   }
-// });
-
-// router.get('/classes', function(req, res, next) {
-//   if (req.isAuthenticated() && req.user.user_type == 'faculty') {
-//     Class.listByFacultyId(req.user.id)
-//       .then((classes) => {
-//         console.log('classes', classes)
-//         res.render('faculty/classes', { layout: 'faculty', classes: classes });
-//       })
-//   } else {
-//     res.redirect('/')
-//   }
-// });
-
-
-// router.get('/class/:classId', function(req, res, next) {
-//   if (req.isAuthenticated() && req.user.user_type == 'faculty') {
-//     Class.getById(req.params.classId)
-//       .then((classData) => {
-//         console.log('class', classData)
-//         Class.getStudentsByClassId(req.params.classId).then((classStudents)=> {
-//           res.render('faculty/class_detail', { layout: 'faculty', classData: classData, classStudents: classStudents });
-//         })
-//       })
-//   } else {
-//     res.redirect('/')
-//   }
-// });
 
