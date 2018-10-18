@@ -10,6 +10,7 @@ module.exports = (function() {
 
   const User = require('../models/user.js');
   const Class = require('../models/class.js');
+  const Committee = require('../models/committee.js');
 
   var adminRoute = require ('express').Router();
 
@@ -98,26 +99,11 @@ adminRoute.get('/faculties/add_faculty',
     }
   });
 
-adminRoute.get('/committee',
-  function (req, res) {
-    if (req.isAuthenticated() && req.user.is_admin) {
-      User.list(client, 'faculty', function (faculty) {
-        res.render('partials/admin/faculties-admin', {
-          faculty: faculty,
-          layout: 'admin',
-          title: 'Faculty'
-        })
-      });
-    } else {
-      res.redirect('/')
-    }
-  });
-
 // ADMIN STUDENTS LIST
 adminRoute.get('/students',
   function (req, res) {
     if (req.isAuthenticated() && req.user.is_admin) {
-      User.listCommittee(client, 'student', function (user) {
+      User.list(client, 'student', function (user) {
         res.render('partials/admin/students-admin', {
           user: user,
           layout: 'admin',
@@ -128,7 +114,6 @@ adminRoute.get('/students',
       res.redirect('/')
     };
   });
-
 
 // ADMIN ADD STUDENTS
 adminRoute.get('/students/add_student',
@@ -194,6 +179,25 @@ adminRoute.get('/class/:id',
           });
         });
         });
+    } else {
+      res.redirect('/')
+    }
+  });
+
+//ADMIN COMMITTEE LIST
+adminRoute.get('/committee',
+  function (req, res) {
+    if (req.isAuthenticated() && req.user.is_admin) {
+      Committee.getFacultyByCommittee(client, {}, function (committee) {
+        Committee.notCommitteeList(client, {}, function(faculty) {
+        res.render('partials/admin/committee-admin', {
+          faculty: faculty,
+          committee: committee,
+          layout: 'admin',
+          title: 'Committee'
+        })
+      });
+      });
     } else {
       res.redirect('/')
     }

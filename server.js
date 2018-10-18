@@ -25,6 +25,10 @@ require('dotenv').config();
 //CALLBACKS
 const Class = require('./models/class.js');
 const User = require('./models/user.js');
+const Committee = require('./models/committee.js');
+const Group = require('./models/group.js');
+
+
 
 //ROUTES
 var adminRoute = require("./routes/admin_route");
@@ -125,7 +129,7 @@ app.post('/insertfaculty', function (req, res) {
           }, function (user) {
             if (user === 'success') {
               console.log('INSERTED');
-              res.redirect('/admin/faculties');
+              res.redirect('/faculty/group');
             } else if (user === 'error') {
               console.log('error', err);
               res.render('partials/admin/error', {
@@ -135,7 +139,7 @@ app.post('/insertfaculty', function (req, res) {
                 action: 'adding',
                 page: 'faculty',
                 layout: 'admin',
-                link: '/admin/faculty'
+                link: '/faculty/group'
               });
             }
           });
@@ -211,6 +215,28 @@ app.post('/insertclass', function (req, res) {
   });
 });
 
+//ADMIN INSERT GROUP
+app.post('/insertgroup', function (req, res) {
+  Group.create(client, {
+    group: req.body.group,
+    class: req.body.class
+  }, function (groups) {
+    if (groups === 'success') {
+      console.log('INSERTED');
+      res.redirect('/faculty/group');
+    } else if (groups === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem adding a group.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'adding',
+        page: 'group',
+        layout: 'faculty',
+        link: '/faculty/group'
+      });
+    }
+  });
+});
 
 //ADMIN INSERT STUDENT IN CLASS
 app.post('/add_student/:id', function (req, res) {
@@ -223,13 +249,56 @@ student: req.body.studentlist
       res.redirect('/admin/class/:id');
     } else if (classes === 'error') {
       res.render('partials/admin/error', {
-        msg: 'There was a problem adding a class.',
+        msg: 'There was a problem adding a student.',
         msg2: 'Try Again?',
         title: 'Error',
         action: 'adding',
-        page: 'class',
+        page: 'student',
         layout: 'admin',
         link: '/admin/class'
+      });
+    }
+  });
+});
+
+//ADMIN INSERT FACULTY IN COMMITTEE
+app.post('/add_committee', function (req, res) {
+  Committee.addFaculty(client, {
+faculty: req.body.facultylist
+  }, function (committee) {
+    if (committee === 'success') {
+      res.redirect('/admin/committee');
+    } else if (committee === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem adding a committee.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'adding',
+        page: 'committee',
+        layout: 'admin',
+        link: '/admin/committee'
+      });
+    }
+  });
+});
+
+//FACULTY INSERT STUDENT IN GROUP
+app.post('/add_group/:id', function (req, res) {
+  Group.addStudent(client, {
+group: req.params.id,
+student: req.body.studentlist
+  }, function (groups) {
+    if (groups === 'success') {
+      res.redirect('/faculty/group');
+    } else if (groups === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem adding a student to group.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'adding',
+        page: 'student',
+        layout: 'faculty',
+        link: '/faculty/group'
       });
     }
   });
