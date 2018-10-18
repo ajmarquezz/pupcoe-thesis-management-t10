@@ -1,6 +1,9 @@
 {
   "name": "thesis-management",
   "version": "1.0.0",
+    "engines": {
+    "node": "10.6.0"
+  },
   "description": "",
   "main": "server.js",
   "dependencies": {
