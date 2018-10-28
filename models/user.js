@@ -62,6 +62,31 @@ var User = {
     });
   },
 
+  submitThesis: (client, thesisData, callback) => {
+    var thesis = [
+      thesisData.group,
+      thesisData.thesistitle,
+      thesisData.abstract
+    ];
+
+    const query = `
+      INSERT INTO thesis
+      (
+      group_id,
+      thesis_title,
+      abstract
+      )
+      VALUES
+      (
+      $1,
+      $2,
+      $3
+      )
+    `;
+        client.query(query, thesis)
+      .then(res => new callback('success'))
+      .catch(e => new callback('error'));
+      },
 
   create: (client, userData, callback) => {
     getByEmail(client, userData.email, function (user) {

@@ -8,14 +8,14 @@ module.exports = (function() {
   
   var facultyRoute = require ('express').Router();
 
-  const client = new Client({
-    database: 'd2e89uf6dlr7q5',
-    user: 'melgulxabeyzzp',
-    password: 'e6d2c7d6c1922a4e41a4acb2a52352dcf75ff97d6c2a7333fdef28047bd6b235',
-    host: 'ec2-184-73-197-211.compute-1.amazonaws.com',
-    port: 5432,
-    ssl: true
-  });
+const client = new Client({
+  database: 'd7illutusb8n6k',
+  user: 'brsaoynqhwfbam',
+  password: '3c091bbda2a4a994b79ab1745089a83fe208f8966f91fbb2e9245097419ca303',
+  host: 'ec2-54-243-46-32.compute-1.amazonaws.com',
+  port: 5432,
+  ssl: true
+});
 
   client.connect()
   .then(function () {
