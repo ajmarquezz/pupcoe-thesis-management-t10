@@ -87,8 +87,8 @@ body {
       <tbody>
         {{#each thesis}}
         <tr>
-          <td>{{this.groupname}}</td>
-          <td>{{this.thesistitle}}</td>
+          <td>{{this.group_id}}</td>
+          <td>{{this.thesis_title}}</td>
           <td><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#abstract">See Abstract</button></td>
           <td>//link to approve</td>
           <td>//link to disapprove</td>
@@ -124,7 +124,7 @@ $('.pagination-inner a').on('click', function() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <p>{{this.abstract}}</p>
+      <p>{{thesis.abstract}}</p>
     </div>
   </div>
 </div>

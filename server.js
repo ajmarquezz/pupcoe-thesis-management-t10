@@ -307,7 +307,7 @@ student: req.body.studentlist
 //STUDENT SUBMIT ABSTRACT
 app.post('/submit', function (req, res) {
   User.submitThesis(client, {
-group: req.body.group_id,
+group: req.body.group,
 thesistitle: req.body.thesistitle,
 abstract: req.body.abstract
   }, function (thesis) {

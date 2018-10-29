@@ -5,6 +5,7 @@ module.exports = (function() {
   const Class = require('../models/class.js');
   const Committee = require('../models/committee.js');
   const Group = require('../models/group.js');
+  const Thesis = require('../models/thesis.js');
   
   var facultyRoute = require ('express').Router();
 
@@ -121,6 +122,25 @@ facultyRoute.get('/group/:id',
     }
   });
 
+
+
+// FACULTY THESIS LIST
+facultyRoute.get('/thesis',
+  function (req, res, next) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty') {
+      Thesis.list(client, {}, function (thesis) {
+        console.log(thesis);
+        res.render('partials/faculty/thesis', {
+          layout: 'faculty',
+          title: 'Thesis',
+          thesis: thesis
+        });
+      });
+
+    } else {
+      res.redirect('/')
+    }
+  });
 
 return facultyRoute;
 })();
