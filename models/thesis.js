@@ -44,7 +44,7 @@ var Thesis = {
 
   },
 
-  updateStatusForCommittee: (client, thesisData, callback) => {
+  updateStatus: (client, thesisData, callback) => {
     var thesis = [
     thesisData.stage,
     thesisData.thesis_id
@@ -61,26 +61,46 @@ var Thesis = {
         client.query(query, thesis)
       .then(res => new callback('success'))
       .catch(e => new callback('error'));
-        },
+        }
+        // ,
 
-  updateStatusForDefense: (client, thesisData, callback) => {
-    var thesis = [
-    thesisData.stage,
-    thesisData.thesis_id
-    ]
+  // updateStatusForDefense: (client, thesisData, callback) => {
+  //   var thesis = [
+  //   thesisData.stage,
+  //   thesisData.thesis_id
+  //   ]
 
-    const query = `
-    UPDATE 
-    thesis 
-    SET 
-    stage = $1,
-    date_updated = current_date
-    WHERE id = $2
-    `;
-        client.query(query, thsis)
-      .then(res => new callback('success'))
-      .catch(e => new callback('error'));
-  }
+  //   const query = `
+  //   UPDATE 
+  //   thesis 
+  //   SET 
+  //   stage = $1,
+  //   date_updated = current_date
+  //   WHERE id = $2
+  //   `;
+  //       client.query(query, thesis)
+  //     .then(res => new callback('success'))
+  //     .catch(e => new callback('error'));
+  // },
+
+  // updateStatusForDefenseUse: (client, thesisData, callback) => {
+  //   var thesis = [
+  //   thesisData.stage,
+  //   thesisData.thesis_id
+  //   ]
+
+  //   const query = `
+  //   UPDATE 
+  //   thesis 
+  //   SET 
+  //   stage = $1,
+  //   date_updated = current_date
+  //   WHERE id = $2
+  //   `;
+  //       client.query(query, thesis)
+  //     .then(res => new callback('success'))
+  //     .catch(e => new callback('error'));
+  // }
 };
 
 module.exports = Thesis;

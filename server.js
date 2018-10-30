@@ -328,9 +328,9 @@ abstract: req.body.abstract
   });
 });
 
-//FACULTY APPROVE/REJECT
+//FACULTY APPROVE
 app.post('/proposal', function (req, res) {
-  Thesis.updateStatusForCommittee(client, {
+  Thesis.updateStatus(client, {
 stage: "for committee",
 thesis_id: req.body.thesis_id
   }, function (thesis) {
@@ -349,11 +349,31 @@ thesis_id: req.body.thesis_id
     }
   });
 });
+//FACULTY REJECT
+app.post('/proposal_reject', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "rejected by faculty",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
 
-
-//FACULTY APPROVE/REJECT
+//COMMITTEE APPROVE/REJECT
 app.post('/proposal/defense', function (req, res) {
-  Thesis.updateStatusForDefense(client, {
+  Thesis.updateStatus(client, {
 stage: "for defense",
 thesis_id: req.body.thesis_id
   }, function (thesis) {
@@ -368,6 +388,50 @@ thesis_id: req.body.thesis_id
         page: 'proposal',
         layout: 'faculty',
         link: '/faculty/thesis'
+      });
+    }
+  });
+});
+
+//COMMITTEE REJECT
+app.post('/proposal/defense_reject', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "rejected by committee",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
+
+//STUDENT THESIS TO USE FOR DEFENSE
+app.post('/proposal/use_defense', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "use for defense",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/student/approved');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem choosing the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'choosing',
+        page: 'proposal',
+        layout: 'student',
+        link: '/student/approved'
       });
     }
   });
