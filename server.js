@@ -418,7 +418,7 @@ thesis_id: req.body.thesis_id
 //STUDENT THESIS TO USE FOR DEFENSE
 app.post('/proposal/use_defense', function (req, res) {
   Thesis.updateStatus(client, {
-stage: "use for defense",
+stage: "MOR",
 thesis_id: req.body.thesis_id
   }, function (thesis) {
     if (thesis === 'success') {
@@ -453,6 +453,7 @@ app.get('/status',
       res.redirect('/')
     }
   });
+
 //ROUTES
 app.use("/admin", adminRoute);
 app.use("/faculty", facultyRoute);
