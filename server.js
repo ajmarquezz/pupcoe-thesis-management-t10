@@ -436,6 +436,23 @@ thesis_id: req.body.thesis_id
     }
   });
 });
+
+
+app.get('/status',
+  function (req, res, next) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty' || 'student') {
+      Thesis.listAll(client, {}, function (thesis) {
+        console.log(thesis);
+        res.render('partials/status', {
+          layout: 'faculty',
+          title: 'Thesis',
+          thesis: thesis
+        });
+      });
+    } else {
+      res.redirect('/')
+    }
+  });
 //ROUTES
 app.use("/admin", adminRoute);
 app.use("/faculty", facultyRoute);

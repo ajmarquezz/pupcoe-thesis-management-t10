@@ -1,6 +1,17 @@
 /* eslint-disable new-cap */
 var Thesis = {
 
+  listAll: (client, filter, callback) => {
+    const listQuery = `
+    SELECT *
+    FROM
+    thesis
+    `;
+    client.query(listQuery, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
  
   list: (client, filter, callback) => {
     const listQuery = `
