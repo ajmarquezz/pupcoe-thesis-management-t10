@@ -27,6 +27,7 @@ const Class = require('./models/class.js');
 const User = require('./models/user.js');
 const Committee = require('./models/committee.js');
 const Group = require('./models/group.js');
+const Thesis = require('./models/thesis.js');
 
 
 
@@ -327,6 +328,50 @@ abstract: req.body.abstract
   });
 });
 
+//FACULTY APPROVE/REJECT
+app.post('/proposal', function (req, res) {
+  Thesis.updateStatusForCommittee(client, {
+stage: "for committee",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
+
+
+//FACULTY APPROVE/REJECT
+app.post('/proposal/defense', function (req, res) {
+  Thesis.updateStatusForDefense(client, {
+stage: "for defense",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
 //ROUTES
 app.use("/admin", adminRoute);
 app.use("/faculty", facultyRoute);

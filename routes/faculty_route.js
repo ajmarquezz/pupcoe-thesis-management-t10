@@ -128,15 +128,19 @@ facultyRoute.get('/group/:id',
 facultyRoute.get('/thesis',
   function (req, res, next) {
       if (req.isAuthenticated() && req.user.user_type == 'faculty') {
+        Thesis.checkIfCommittee(client, req.user.id, function(data) {
       Thesis.list(client, {}, function (thesis) {
+              Thesis.listCommittee(client, {}, function (committeeApproval) {
         console.log(thesis);
         res.render('partials/faculty/thesis', {
           layout: 'faculty',
           title: 'Thesis',
-          thesis: thesis
+          thesis: thesis,
+          committee: data,
+          committeeApproval: committeeApproval
         });
       });
-
+});});
     } else {
       res.redirect('/')
     }

@@ -67,7 +67,7 @@ body {
 </style>
 
 
-<h1>Thesis</h1>
+<h1>For Approval</h1>
 <div style="padding-left: 50px; padding-right:76px;">
   <div class="tbl-header">
     <table cellpadding="0" cellspacing="0" border="0">
@@ -90,8 +90,13 @@ body {
           <td>{{this.group_id}}</td>
           <td>{{this.thesis_title}}</td>
           <td><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#abstract">See Abstract</button></td>
-          <td>//link to approve</td>
-          <td>//link to disapprove</td>
+                  <form action="/proposal" method="post">
+                    <input type="hidden" name="thesis_id" value="{{this.id}}">
+                    <div class="form-group">
+                      <td><input type="submit" name="acceptThis" class="btn btn-sm btn-outline-secondary" value="Approve"></td>
+                      <td><input type="submit" name="rejectThis" class="btn btn-sm btn-outline-secondary" value="Reject"></td>
+                    </div>
+                  </form>
         </tr>
         {{/each}}
       </tbody>
@@ -114,7 +119,7 @@ $('.pagination-inner a').on('click', function() {
 });
 </script>
 
-
+{{#each thesis}}
 <div class="modal fade" id="abstract" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -124,7 +129,82 @@ $('.pagination-inner a').on('click', function() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <p>{{thesis.abstract}}</p>
+      <p>{{this.abstract}}</p>
     </div>
   </div>
 </div>
+{{/each}}
+
+
+
+
+
+{{#if committee}}
+<h1>For Committee Approval</h1>
+<div style="padding-left: 50px; padding-right:76px;">
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th>Group</th>
+          <th>Title</th>
+          <th>Abstract</th>
+          <th>Approve</th>
+          <th>Disapprove</th>
+        </tr>
+      </thead>
+    </table>
+  </div> 
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+        {{#each committeeApproval}}
+        <tr>
+          <td>{{this.group_id}}</td>
+          <td>{{this.thesis_title}}</td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#abstract">See Abstract</button></td>
+                  <form action="/proposal/defense" method="post">
+                    <input type="hidden" name="thesis_id" value="{{this.id}}">
+                    <div class="form-group">
+                      <td><input type="submit" name="acceptThis" class="btn btn-sm btn-outline-secondary" value="Approve"></td>
+                      <td><input type="submit" name="rejectThis" class="btn btn-sm btn-outline-secondary" value="Reject"></td>
+                    </div>
+                  </form>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <br>
+</div>
+
+<script type="text/javascript">
+$(window).on("load resize ", function() {
+  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+  $('.tbl-header').css({'padding-right':scrollWidth});
+}).resize();
+</script>
+
+<script type="text/javascript">
+$('.pagination-inner a').on('click', function() {
+    $(this).siblings().removeClass('pagination-active');
+    $(this).addClass('pagination-active');
+});
+</script>
+
+{{#each committeeApproval}}
+<div class="modal fade" id="abstract" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Abstract</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <p>{{this.abstract}}</p>
+    </div>
+  </div>
+</div>
+{{/each}}
+ {{/if}}
