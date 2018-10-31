@@ -422,7 +422,7 @@ stage: "MOR",
 thesis_id: req.body.thesis_id
   }, function (thesis) {
     if (thesis === 'success') {
-      res.redirect('/student/approved');
+      res.redirect('/student/choose');
     } else if (thesis === 'error') {
       res.render('partials/admin/error', {
         msg: 'There was a problem choosing the proposal.',
@@ -431,7 +431,7 @@ thesis_id: req.body.thesis_id
         action: 'choosing',
         page: 'proposal',
         layout: 'student',
-        link: '/student/approved'
+        link: '/student/choose'
       });
     }
   });

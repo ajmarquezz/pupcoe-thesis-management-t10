@@ -12,7 +12,18 @@ var Thesis = {
       callback(data.rows);
     });
   },
- 
+  listFilter: (client, filter, callback) => {
+    const listQuery = `
+    SELECT *
+    FROM
+    thesis
+    WHERE group_id = '${filter}'
+    `;
+    client.query(listQuery, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
   list: (client, filter, callback) => {
     const listQuery = `
     SELECT *

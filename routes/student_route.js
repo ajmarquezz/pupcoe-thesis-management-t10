@@ -4,6 +4,7 @@ module.exports = (function() {
   const User = require('../models/user.js');
   const Class = require('../models/class.js');
   const Group = require('../models/group.js');
+  const Thesis = require('../models/thesis.js');
 
   var studentRoute = require ('express').Router();
 
@@ -49,6 +50,25 @@ studentRoute.get('/submit_abstract',
         layout: 'student'
       });
             console.log(data);
+      });
+  } else {
+    res.redirect('/')
+  }
+  });
+
+//STUDENT SUBMIT THESIS FORM
+studentRoute.get('/choose',
+  function (req, res, next) {
+  if (req.isAuthenticated() && req.user.user_type == 'student') {
+    Group.listGroups(client, {}, function(data) {
+      Thesis.listAll(client, {}, function(thesis) {
+      res.render('partials/student/choose', {
+        data: data,
+        title: 'Submit Abstract',
+        layout: 'student',
+        thesis: thesis
+      });
+      });
       });
   } else {
     res.redirect('/')
