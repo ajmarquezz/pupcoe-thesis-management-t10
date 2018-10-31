@@ -94,13 +94,11 @@ body {
                     <input type="hidden" name="thesis_id" value="{{this.id}}">
                     <div class="form-group">
                       <td><input type="submit" name="acceptThis" class="btn btn-sm btn-outline-secondary" value="Approve"></td>
-{{!--                       <td><input type="submit" name="rejectThis" class="btn btn-sm btn-outline-secondary" value="Reject"></td> --}}
                     </div>
                   </form>
                   <form action="/proposal_reject" method="post">
                     <input type="hidden" name="thesis_id" value="{{this.id}}">
                     <div class="form-group">
-{{!--                       <td><input type="submit" name="acceptThis" class="btn btn-sm btn-outline-secondary" value="Approve"></td> --}}
                       <td><input type="submit" name="rejectThis" class="btn btn-sm btn-outline-secondary" value="Reject"></td>
                     </div>
                   </form>
@@ -222,5 +220,5 @@ $('.pagination-inner a').on('click', function() {
 </div>
 {{/each}}
  {{/if}}
-
+           <a class="btn btn-dark col-md-12 back" href="/faculty/mor">ASSIGN HEAD PANELIST</a>
            <a class="btn btn-dark col-md-12 back" href="/status">SEE PROPOSAL STATUSES</a>

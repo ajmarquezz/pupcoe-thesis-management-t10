@@ -34,7 +34,6 @@ var User = {
     });
   },
 
-
   list: (client, filter, callback) => {
     const userListQuery = `
       SELECT *
@@ -47,8 +46,6 @@ var User = {
       callback(data.rows);
     });
   },
-
-
 
   noClassList: (client, filter, callback) => {
     const query = `
