@@ -50,6 +50,19 @@ var Group = {
       callback(data.rows);
     });
   },
+
+  listGroups: (client, filter, callback) => {
+    const listQuery = `
+    SELECT *
+    FROM
+    groups
+    `;
+    client.query(listQuery, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
+
   create: (client, groupData, callback) => {
     var groups = [
     groupData.group,

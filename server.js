@@ -27,6 +27,7 @@ const Class = require('./models/class.js');
 const User = require('./models/user.js');
 const Committee = require('./models/committee.js');
 const Group = require('./models/group.js');
+const Thesis = require('./models/thesis.js');
 
 
 
@@ -40,10 +41,10 @@ var loginRoute = require("./routes/login");
 
 //CLIENT
 const client = new Client({
-  database: 'd2e89uf6dlr7q5',
-  user: 'melgulxabeyzzp',
-  password: 'e6d2c7d6c1922a4e41a4acb2a52352dcf75ff97d6c2a7333fdef28047bd6b235',
-  host: 'ec2-184-73-197-211.compute-1.amazonaws.com',
+  database: 'd7illutusb8n6k',
+  user: 'brsaoynqhwfbam',
+  password: '3c091bbda2a4a994b79ab1745089a83fe208f8966f91fbb2e9245097419ca303',
+  host: 'ec2-54-243-46-32.compute-1.amazonaws.com',
   port: 5432,
   ssl: true
 });
@@ -303,6 +304,155 @@ student: req.body.studentlist
     }
   });
 });
+
+//STUDENT SUBMIT ABSTRACT
+app.post('/submit', function (req, res) {
+  User.submitThesis(client, {
+group: req.body.group,
+thesistitle: req.body.thesistitle,
+abstract: req.body.abstract
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/student/');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem submitting your proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'submitting',
+        page: 'proposal',
+        layout: 'student',
+        link: '/student/submit_abstract'
+      });
+    }
+  });
+});
+
+//FACULTY APPROVE
+app.post('/proposal', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "for committee",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
+//FACULTY REJECT
+app.post('/proposal_reject', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "rejected by faculty",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
+
+//COMMITTEE APPROVE/REJECT
+app.post('/proposal/defense', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "for defense",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
+
+//COMMITTEE REJECT
+app.post('/proposal/defense_reject', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "rejected by committee",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/thesis');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem approving/rejecting the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'approving/rejecting',
+        page: 'proposal',
+        layout: 'faculty',
+        link: '/faculty/thesis'
+      });
+    }
+  });
+});
+
+//STUDENT THESIS TO USE FOR DEFENSE
+app.post('/proposal/use_defense', function (req, res) {
+  Thesis.updateStatus(client, {
+stage: "MOR",
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/student/approved');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem choosing the proposal.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'choosing',
+        page: 'proposal',
+        layout: 'student',
+        link: '/student/approved'
+      });
+    }
+  });
+});
+
+
+app.get('/status',
+  function (req, res, next) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty' || 'student') {
+      Thesis.listAll(client, {}, function (thesis) {
+        console.log(thesis);
+        res.render('partials/status', {
+          layout: 'faculty',
+          title: 'Thesis',
+          thesis: thesis
+        });
+      });
+    } else {
+      res.redirect('/')
+    }
+  });
 
 //ROUTES
 app.use("/admin", adminRoute);

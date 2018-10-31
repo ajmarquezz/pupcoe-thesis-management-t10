@@ -116,6 +116,26 @@ var Class = {
       callback(data.rows);
     });
   },
+
+  getByStudentIdGroup: (client, studentId, callback) => {
+    const query = `
+      SELECT 
+        gr.groupname,
+        gr.class,
+        u.first_name,
+        u.last_name,
+        u.email
+      FROM "groupStudents" g
+      INNER JOIN groups gr on g.group_id = gr.id
+      INNER JOIN users u on g.student_id = u.id
+      WHERE g.student_id = ${studentId}
+    `;
+    client.query(query, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
+
   addStudents: (client, data, callback) => {
       var query = `
         INSERT INTO "classStudents" (
