@@ -422,7 +422,7 @@ stage: "MOR",
 thesis_id: req.body.thesis_id
   }, function (thesis) {
     if (thesis === 'success') {
-      res.redirect('/student/approved');
+      res.redirect('/student/choose');
     } else if (thesis === 'error') {
       res.render('partials/admin/error', {
         msg: 'There was a problem choosing the proposal.',
@@ -431,17 +431,17 @@ thesis_id: req.body.thesis_id
         action: 'choosing',
         page: 'proposal',
         layout: 'student',
-        link: '/student/approved'
+        link: '/student/choose'
       });
     }
   });
 });
 
-
+//SEE THESIS STATUS
 app.get('/status',
   function (req, res, next) {
       if (req.isAuthenticated() && req.user.user_type == 'faculty' || 'student') {
-      Thesis.listAll(client, {}, function (thesis) {
+      Thesis.listHeadPanel(client, {}, function (thesis) {
         console.log(thesis);
         res.render('partials/status', {
           layout: 'faculty',
@@ -454,6 +454,29 @@ app.get('/status',
     }
   });
 
+
+
+//ASSIGN HEAD PANELIST
+app.post('/assign', function (req, res) {
+  Thesis.updateHeadPanel(client, {
+head: req.body.facultylist,
+thesis_id: req.body.thesis_id
+  }, function (thesis) {
+    if (thesis === 'success') {
+      res.redirect('/faculty/mor');
+    } else if (thesis === 'error') {
+      res.render('partials/admin/error', {
+        msg: 'There was a problem choosing the panel.',
+        msg2: 'Try Again?',
+        title: 'Error',
+        action: 'choosing',
+        page: 'panel',
+        layout: 'faculty',
+        link: '/faculty/mor'
+      });
+    }
+  });
+});
 //ROUTES
 app.use("/admin", adminRoute);
 app.use("/faculty", facultyRoute);

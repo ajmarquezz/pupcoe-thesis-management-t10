@@ -146,6 +146,31 @@ facultyRoute.get('/thesis',
     }
   });
 
+
+
+
+// FACULTY ASSIGN HEAD PANELIST
+facultyRoute.get('/mor',
+  function (req, res, next) {
+      if (req.isAuthenticated() && req.user.user_type == 'faculty') {
+      // Thesis.listForMor(client, {}, function (thesis) {
+        Thesis.listHeadPanel(client, {}, function(head){
+        User.list(client, 'faculty', function(faculty){
+        console.log(thesis);
+        res.render('partials/faculty/assign', {
+          layout: 'faculty',
+          title: 'Thesis',
+          thesis: thesis,
+          faculty: faculty,
+          head: head
+      });
+      // });
+});});
+    } else {
+      res.redirect('/')
+    }
+  });
+
 return facultyRoute;
 })();
 
